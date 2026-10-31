@@ -1,7 +1,7 @@
 {
   "name": "@perrylink/dsh-pim-lint",
-  "version": "0.1.0-alpha.0",
-  "description": "Public/synthetic PIM catalog lint: required fields, duplicate SKU, GTIN check digit, price validation. Not a channel listing or PIM product.",
+  "version": "0.1.0-alpha.1",
+  "description": "PIM catalog lint: required fields, duplicate SKU, GTIN check digit and price.",
   "type": "module",
   "main": "./lib/plugin/index.js",
   "types": "./lib/plugin/index.d.ts",
@@ -42,7 +42,9 @@
     "dsh-plugin",
     "pim",
     "gtin",
-    "perrylink"
+    "perrylink",
+    "catalog",
+    "lint"
   ],
   "repository": {
     "type": "git",
@@ -61,5 +63,9 @@
     "@deepseek-ai/dsh-tools": "0.2.1-rc.3",
     "@types/node": "^24.0.0",
     "typescript": "7.0.2"
+  },
+  "homepage": "https://github.com/PerryLink/dsh-pim-lint#readme",
+  "bugs": {
+    "url": "https://github.com/PerryLink/dsh-pim-lint/issues"
   }
 }
