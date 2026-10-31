@@ -1,60 +1,116 @@
+<div align="center">
+
 # dsh-pim-lint
 
-> 🧊 **FROZEN — 2026-10-31. No new features.** This public/synthetic S1 demo is not GA; it stays installable and only genuine breakage is fixed.
+[![npm](https://img.shields.io/npm/v/dsh-pim-lint)](https://www.npmjs.com/package/dsh-pim-lint)
+[![CI](https://github.com/PerryLink/dsh-pim-lint/actions/workflows/ci.yml/badge.svg)](https://github.com/PerryLink/dsh-pim-lint/actions)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
+[![dsh-plugin](https://img.shields.io/badge/dsh--plugin-%E2%9C%93-green)](https://github.com/topics/dsh-plugin)
+[![docs](https://img.shields.io/badge/docs-domain%20index-0b5fff)](https://perrylink.github.io/dsh-plugins/)
+
+**PIM catalog lint: required fields, duplicate SKU, GTIN check digit and price.**
+
+> **Status: alpha / public-synthetic / partial / not counted / not GA.** No customer evidence, customer data, or production-readiness claim.
+
+> 🧊 **FROZEN — 2026-10-31. No new features.** Installable; only genuine breakage is fixed.
 
 ## Maintenance status: 🧊 FROZEN
 
-Frozen on 2026-10-31. This repository is a public/synthetic S1 demo, not a validated product. The npm package stays installable; no new features are planned.
+Frozen on 2026-10-31; the package stays installable, but feature work stops.
 
+[English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
-PIM catalog lint for required fields, duplicate SKU, GTIN check digit and price for DeepSeek Harness.
+```sh
+dsh plugin --profile <profile> add dsh-pim-lint
+```
 
-> **Status: alpha / public-synthetic / partial / not counted / not GA.** No customer evidence, customer data, or production-readiness claim. All acceptance rows are `counted=false`.
+</div>
+
+![Workflow diagram for dsh-pim-lint: local input, plugin, local output.](docs/assets/dsh-pim-lint-flow.svg)
+
+*Workflow: local input → plugin → local output. No model call is required.*
 
 ## Install
+
+Install and verify:
 
 ```sh
 dsh plugin --profile <profile> add dsh-pim-lint
 dsh --profile <profile> --dump-config | grep dsh-pim-lint
 ```
 
-Requires DSH `>=0.2.1-rc.3 <0.3.0` and Node `>=24.9 <25`.
+Uninstall:
 
-<details>
-<summary>中文摘要</summary>
+```sh
+dsh plugin --profile <profile> remove dsh-pim-lint
+```
 
-PIM 目录 lint：必填、重复 SKU、GTIN 校验位与价格。 安装：`dsh plugin --profile <profile> add dsh-pim-lint`。公开/合成、alpha、非 GA。
+## What it does
 
-</details>
+PIM catalog lint: required fields, duplicate SKU, GTIN check digit and price. Runs locally on DeepSeek Harness. The table below is the exact tool surface; the examples use the real command surface.
+
+Input and output stay local; nothing is uploaded.
 
 ## Tools
 
-| Tool | What it does | Risk |
+Tool names and descriptions are kept in English to match the runtime output.
+
+| Tool | Purpose | Risk |
 |---|---|---|
 | `pim.validate` | Validate `sku,title,gtin,price` CSV rows and return issues | R0 |
 | `pim.gtin_check` | Check GTIN-8/12/13/14 check digits | R0 |
 
-## Input / output
+## Quick start
 
-**Input:** a `sku,title,gtin,price` CSV. **Output:** an issue list (missing fields, duplicate SKU, invalid GTIN, invalid price). This is a lint, not a PIM.
+```sh
+dsh plugin --profile <profile> add dsh-pim-lint
+dsh --profile <profile> --dump-config | grep dsh-pim-lint
+```
 
-## Limits / non-claims
+## Limits
 
-- Not a PIM, channel listing tool, Amazon/Shopify integration, or a replacement for SKU-14.
-- No image, taxonomy, localization, or marketplace schema handling.
-- Synthetic catalog fixtures only; no real seller catalog.
-- No customer evidence, customer data, or production-readiness claim; all fixtures are public/synthetic.
+- Public/synthetic only; no customer data or customer evidence.
+- Alpha/partial, not counted, no GA or production-readiness claim.
+- No model or network call unless a tool explicitly says so.
+- The exact per-tool boundaries are in the table and `ACCEPTANCE.csv`.
 
 ## Public sample
 
-Synthetic catalog rows; `ACCEPTANCE.csv` lists 3 public checks.
+Public/synthetic fixtures live in `test/fixtures/`; `ACCEPTANCE.csv` records the public checks with `counted=false`.
 
 ## Development
 
 ```sh
 pnpm install --frozen-lockfile
-pnpm build && pnpm lint && pnpm typecheck && pnpm test && pnpm gate
+pnpm build && pnpm lint && pnpm typecheck && pnpm test
 ```
+
+## Family
+
+<details>
+<summary>DSH domain plugin family (15 packages + 2 suites)</summary>
+
+| Package | npm |
+|---|---|
+| **[dsh-einvoice](https://github.com/PerryLink/dsh-einvoice)** | [npm](https://www.npmjs.com/package/dsh-einvoice) |
+| **[dsh-docx-redline](https://github.com/PerryLink/dsh-docx-redline)** | [npm](https://www.npmjs.com/package/dsh-docx-redline) |
+| **[dsh-policy-ledger](https://github.com/PerryLink/dsh-policy-ledger)** | [npm](https://www.npmjs.com/package/dsh-policy-ledger) |
+| **[dsh-ghg](https://github.com/PerryLink/dsh-ghg)** | [npm](https://www.npmjs.com/package/dsh-ghg) |
+| **[dsh-bankrec](https://github.com/PerryLink/dsh-bankrec)** | [npm](https://www.npmjs.com/package/dsh-bankrec) |
+| **[dsh-ap-three-way](https://github.com/PerryLink/dsh-ap-three-way)** | [npm](https://www.npmjs.com/package/dsh-ap-three-way) |
+| **[dsh-ifc-qto](https://github.com/PerryLink/dsh-ifc-qto)** | [npm](https://www.npmjs.com/package/dsh-ifc-qto) |
+| **[dsh-qms-capa](https://github.com/PerryLink/dsh-qms-capa)** | [npm](https://www.npmjs.com/package/dsh-qms-capa) |
+| **[dsh-legal-intake](https://github.com/PerryLink/dsh-legal-intake)** | [npm](https://www.npmjs.com/package/dsh-legal-intake) |
+| **[dsh-legal-clause](https://github.com/PerryLink/dsh-legal-clause)** | [npm](https://www.npmjs.com/package/dsh-legal-clause) |
+| **[dsh-freight-audit](https://github.com/PerryLink/dsh-freight-audit)** | [npm](https://www.npmjs.com/package/dsh-freight-audit) |
+| **[dsh-hs-candidate](https://github.com/PerryLink/dsh-hs-candidate)** | [npm](https://www.npmjs.com/package/dsh-hs-candidate) |
+| **[dsh-travel-recon](https://github.com/PerryLink/dsh-travel-recon)** | [npm](https://www.npmjs.com/package/dsh-travel-recon) |
+| **[dsh-pim-lint](https://github.com/PerryLink/dsh-pim-lint)** | [npm](https://www.npmjs.com/package/dsh-pim-lint) |
+| **[dsh-eval-pack](https://github.com/PerryLink/dsh-eval-pack)** | [npm](https://www.npmjs.com/package/dsh-eval-pack) |
+| **[dsh-finops-suite](https://github.com/PerryLink/dsh-finops-suite)** | [npm](https://www.npmjs.com/package/dsh-finops-suite) |
+| **[dsh-contract-suite](https://github.com/PerryLink/dsh-contract-suite)** | [npm](https://www.npmjs.com/package/dsh-contract-suite) |
+
+</details>
 
 ## License
 
