@@ -1,4 +1,4 @@
-# @perrylink/dsh-pim-lint
+# dsh-pim-lint
 
 PIM catalog lint for required fields, duplicate SKU, GTIN check digit and price for DeepSeek Harness.
 
@@ -7,7 +7,7 @@ PIM catalog lint for required fields, duplicate SKU, GTIN check digit and price 
 ## Install
 
 ```sh
-dsh plugin --profile <profile> add @perrylink/dsh-pim-lint
+dsh plugin --profile <profile> add dsh-pim-lint
 dsh --profile <profile> --dump-config | grep dsh-pim-lint
 ```
 
@@ -16,7 +16,7 @@ Requires DSH `>=0.2.1-rc.3 <0.3.0` and Node `>=24.9 <25`.
 <details>
 <summary>中文摘要</summary>
 
-PIM 目录 lint：必填、重复 SKU、GTIN 校验位与价格。 安装：`dsh plugin --profile <profile> add @perrylink/dsh-pim-lint`。公开/合成、alpha、非 GA。
+PIM 目录 lint：必填、重复 SKU、GTIN 校验位与价格。 安装：`dsh plugin --profile <profile> add dsh-pim-lint`。公开/合成、alpha、非 GA。
 
 </details>
 
