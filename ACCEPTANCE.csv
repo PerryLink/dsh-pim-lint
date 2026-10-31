@@ -1,0 +1,4 @@
+req_id,metric,actual,pass,source,counted
+PIM-A01,valid catalog accepted,true,true,public/synthetic,false
+PIM-A02,duplicate/bad GTIN/price issues,true,true,public/synthetic,false
+PIM-A03,GTIN check digit,true,true,public/synthetic,false
