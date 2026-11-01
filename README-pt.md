@@ -90,7 +90,7 @@ dsh --profile <profile> --dump-config | grep dsh-pim-lint
 
 ### Exemplo com fixture
 
-Entrada: `fixtures/`
+Entrada: [`ACCEPTANCE.csv`](ACCEPTANCE.csv)
 
 Comando: `pnpm test`
 
