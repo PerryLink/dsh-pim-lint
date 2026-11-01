@@ -24,7 +24,7 @@ All notable changes to `dsh-pim-lint` are documented here. The format follows Ke
 
 ### Maintenance
 
-- Frozen on 2026-10-31: no new features; only genuine breakage fixes.
+- 2026-11-01: active again — feature work, hardening and fresh evidence resumed.
 
 ## [Earlier]
 
