@@ -58,3 +58,19 @@ export function validateRows(rows: PimRow[]): PimIssue[] {
   }
   return issues
 }
+
+/**
+ * SSCC (Serial Shipping Container Code) check per the GS1 General Specifications: 18 digits,
+ * the final digit is the mod-10 check digit computed over the first 17 with weights 3/1 from the right.
+ */
+export interface SsccResult { sscc: string; valid: boolean; reason?: string }
+export function ssccCheck(raw: string): SsccResult {
+  const sscc = raw.replace(/\s+/g, '')
+  if (!/^\d{18}$/.test(sscc)) return { sscc, valid: false, reason: 'E_PIM_SSCC_FORMAT' }
+  const nums = [...sscc].map(Number)
+  const check = nums.pop()!
+  let sum = 0
+  for (let i = nums.length - 1, weight = 3; i >= 0; i -= 1, weight = weight === 3 ? 1 : 3) sum += nums[i]! * weight
+  if ((10 - (sum % 10)) % 10 !== check) return { sscc, valid: false, reason: 'E_PIM_SSCC_CHECKSUM' }
+  return { sscc, valid: true }
+}

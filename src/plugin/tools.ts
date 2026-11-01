@@ -1,5 +1,5 @@
 import { defineTool } from '@deepseek-ai/dsh-tools'
-import { gtinInfo, gtinValid, parseCsv, validateRows } from '../core/pim.js'
+import { gtinInfo, gtinValid, parseCsv, ssccCheck, validateRows } from '../core/pim.js'
 const text = (t: string) => [{ type: 'text' as const, text: t }]
 export function createTools() {
   const validate = defineTool({
@@ -26,5 +26,13 @@ export function createTools() {
     output: { schema: { type: 'object', additionalProperties: false, properties: { gtin: { type: 'string', required: true }, valid: { type: 'boolean', required: true }, format: { type: 'string', required: true }, indicator: { type: 'number' }, variable_measure: { type: 'boolean', required: true } } }, render: (_a, v) => text(`${v.gtin} ${v.format} ${v.valid ? 'ok' : 'invalid'}`) },
     async execute(args) { const info = gtinInfo(args.gtin); return { ...info, indicator: info.indicator ?? undefined } },
   })
-  return [validate, gtin, gtinStructure]
+  const sscc = defineTool({
+    name: 'pim.sscc_check',
+    description: 'Check an SSCC (18 digits, GS1 mod-10 check digit). Read-only.',
+    parameters: { sscc: { type: 'string', required: true } },
+    output: { schema: { type: 'object', additionalProperties: false, properties: { sscc: { type: 'string', required: true }, valid: { type: 'boolean', required: true }, reason: { type: 'string' } } }, render: (_a, v) => text(`${v.sscc} ${v.valid ? 'ok' : 'invalid'}`) },
+    async execute(args) { return ssccCheck(args.sscc) },
+  })
+
+  return [validate, gtin, gtinStructure, sscc]
 }

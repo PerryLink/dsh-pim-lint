@@ -1,6 +1,12 @@
 # Changelog
 
-## [0.1.0-alpha.8] — 2026-11-01
+## [0.1.0-alpha.9] — 2026-11-01
+
+### Added
+
+- `pim.sscc_check`: SSCC validation (18 digits, GS1 mod-10 check digit) with distinct format and checksum codes. Verified by `node --test test/*.test.mjs` (8/8).
+
+## [Unreleased]
 
 ### Added
 

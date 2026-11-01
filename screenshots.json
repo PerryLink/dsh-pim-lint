@@ -10,5 +10,11 @@
     "kind": "flow",
     "alt": "dsh-pim-lint flow diagram",
     "caption": "Pipeline diagram, schematic not test evidence."
+  },
+  {
+    "path": "docs/assets/dsh-pim-lint-capability2.png",
+    "kind": "capability",
+    "alt": "dsh-pim-lint second capability run",
+    "caption": "Real command: node --test test/sscc.test.mjs — 3 tests passed, 0 failed (SSCC 18-digit mod-10 check per the GS1 General Specifications.) Run 2026-11-01; rendered from the captured terminal output."
   }
 ]

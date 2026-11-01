@@ -5,3 +5,4 @@ PIM-A03,GTIN check digit,true,true,public/synthetic,false
 PIM-A04,GTIN-14 packaging indicator / variable measure,true,true,public/synthetic,false
 PIM-A05,duplicate GTIN reported,true,true,public/synthetic,false
 PIM-A06,over-precise price reported,true,true,public/synthetic,false
+PIM-A07,SSCC mod-10 check,true,true,public/synthetic,false
