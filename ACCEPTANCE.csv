@@ -2,3 +2,6 @@ req_id,metric,actual,pass,source,counted
 PIM-A01,valid catalog accepted,true,true,public/synthetic,false
 PIM-A02,duplicate/bad GTIN/price issues,true,true,public/synthetic,false
 PIM-A03,GTIN check digit,true,true,public/synthetic,false
+PIM-A04,GTIN-14 packaging indicator / variable measure,true,true,public/synthetic,false
+PIM-A05,duplicate GTIN reported,true,true,public/synthetic,false
+PIM-A06,over-precise price reported,true,true,public/synthetic,false

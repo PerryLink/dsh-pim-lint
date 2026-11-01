@@ -1,5 +1,5 @@
 import { defineTool } from '@deepseek-ai/dsh-tools'
-import { gtinValid, parseCsv, validateRows } from '../core/pim.js'
+import { gtinInfo, gtinValid, parseCsv, validateRows } from '../core/pim.js'
 const text = (t: string) => [{ type: 'text' as const, text: t }]
 export function createTools() {
   const validate = defineTool({
@@ -19,5 +19,12 @@ export function createTools() {
     output: { schema: { type: 'object', additionalProperties: false, properties: { gtin: { type: 'string', required: true }, valid: { type: 'boolean', required: true } } }, render: (_a, v) => text(`${v.gtin} ${v.valid ? 'ok' : 'invalid'}`) },
     async execute(args) { return { gtin: args.gtin, valid: gtinValid(args.gtin) } },
   })
-  return [validate, gtin]
+  const gtinStructure = defineTool({
+    name: 'pim.gtin_structure',
+    description: 'Decompose a GTIN (8/12/13/14 digits): format, check digit validity, packaging indicator and variable-measure flag per GS1 General Specifications. Read-only.',
+    parameters: { gtin: { type: 'string', required: true } },
+    output: { schema: { type: 'object', additionalProperties: false, properties: { gtin: { type: 'string', required: true }, valid: { type: 'boolean', required: true }, format: { type: 'string', required: true }, indicator: { type: 'number' }, variable_measure: { type: 'boolean', required: true } } }, render: (_a, v) => text(`${v.gtin} ${v.format} ${v.valid ? 'ok' : 'invalid'}`) },
+    async execute(args) { const info = gtinInfo(args.gtin); return { ...info, indicator: info.indicator ?? undefined } },
+  })
+  return [validate, gtin, gtinStructure]
 }

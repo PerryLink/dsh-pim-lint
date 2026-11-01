@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.0-alpha.8] — 2026-11-01
+
+### Added
+
+- `pim.gtin_structure`: GTIN-8/12/13/14 decomposition with the GTIN-14 packaging indicator and variable-measure flag (GS1 General Specifications).
+- `pim.validate` now reports duplicate GTINs (`E_PIM_GTIN_DUPLICATE`) and over-precise prices (`E_PIM_PRICE_PRECISION`).
+- Verified by `node --test test/pim.test.mjs` (5/5); fixtures are our own public/synthetic rows.
+
 ## [0.1.0-alpha.7] — 2026-11-01
 
 ### Changed

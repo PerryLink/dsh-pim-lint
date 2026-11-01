@@ -1,0 +1,14 @@
+[
+  {
+    "path": "docs/assets/dsh-pim-lint-capability.png",
+    "kind": "capability",
+    "alt": "dsh-pim-lint real test run",
+    "caption": "Real command: node --test test/pim.test.mjs — 5 tests passed, 0 failed (GTIN-14 indicator, duplicate GTIN and price-precision rules). Run 2026-11-01; the image is rendered from the captured terminal output."
+  },
+  {
+    "path": "docs/assets/dsh-pim-lint-flow.svg",
+    "kind": "flow",
+    "alt": "dsh-pim-lint flow diagram",
+    "caption": "Pipeline diagram, schematic not test evidence."
+  }
+]
