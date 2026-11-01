@@ -90,7 +90,7 @@ dsh --profile <profile> --dump-config | grep dsh-pim-lint
 
 ### fixture 支撑的示例
 
-输入: [`ACCEPTANCE.csv`](ACCEPTANCE.csv)
+输入: [`ACCEPTANCE.csv`](https://github.com/PerryLink/dsh-pim-lint/blob/main/ACCEPTANCE.csv)
 
 命令: `pnpm test`
 
@@ -139,6 +139,8 @@ pnpm build && pnpm lint && pnpm typecheck && pnpm test
 ## 相关项目
 
 兄弟包与家族索引： [dsh-hs-candidate](https://github.com/PerryLink/dsh-hs-candidate) · [dsh-freight-audit](https://github.com/PerryLink/dsh-freight-audit) · [dsh-policy-ledger](https://github.com/PerryLink/dsh-policy-ledger)
+
+相关工具（英文表）: [Related tools](README.md#related-tools).
 
 - [领域索引](https://perrylink.github.io/dsh-plugins/)
 - [Checker 家族](https://perrylink.github.io/zh/checkers/)

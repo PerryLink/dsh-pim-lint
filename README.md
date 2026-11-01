@@ -90,7 +90,7 @@ dsh --profile <profile> --dump-config | grep dsh-pim-lint
 
 ### Fixture-backed example
 
-Input: [`ACCEPTANCE.csv`](ACCEPTANCE.csv)
+Input: [`ACCEPTANCE.csv`](https://github.com/PerryLink/dsh-pim-lint/blob/main/ACCEPTANCE.csv)
 
 Command: `pnpm test`
 
@@ -139,6 +139,16 @@ pnpm build && pnpm lint && pnpm typecheck && pnpm test
 ## Related work
 
 Sibling packages and family indexes: [dsh-hs-candidate](https://github.com/PerryLink/dsh-hs-candidate) · [dsh-freight-audit](https://github.com/PerryLink/dsh-freight-audit) · [dsh-policy-ledger](https://github.com/PerryLink/dsh-policy-ledger)
+
+
+### Related tools
+
+Each entry is a separate package with its own tool surface and version; install only the ones you need.
+
+| Package | Why it is relevant |
+|---|---|
+| [`dsh-excel-reconcile`](https://github.com/PerryLink/dsh-excel-reconcile) | Two-table alignment for catalog/ERP exports. |
+| [`dsh-data-quality`](https://github.com/PerryLink/dsh-data-quality) | Deterministic data profiling and cleaning. |
 
 - [Domain index](https://perrylink.github.io/dsh-plugins/)
 - [Checker family](https://perrylink.github.io/zh/checkers/)

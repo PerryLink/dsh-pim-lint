@@ -90,7 +90,7 @@ dsh --profile <profile> --dump-config | grep dsh-pim-lint
 
 ### Ejemplo respaldado por fixture
 
-Entrada: [`ACCEPTANCE.csv`](ACCEPTANCE.csv)
+Entrada: [`ACCEPTANCE.csv`](https://github.com/PerryLink/dsh-pim-lint/blob/main/ACCEPTANCE.csv)
 
 Comando: `pnpm test`
 
@@ -139,6 +139,8 @@ pnpm build && pnpm lint && pnpm typecheck && pnpm test
 ## Trabajo relacionado
 
 Paquetes hermanos e índices de familia: [dsh-hs-candidate](https://github.com/PerryLink/dsh-hs-candidate) · [dsh-freight-audit](https://github.com/PerryLink/dsh-freight-audit) · [dsh-policy-ledger](https://github.com/PerryLink/dsh-policy-ledger)
+
+Herramientas relacionadas (tabla en inglés): [Related tools](README.md#related-tools).
 
 - [Índice de dominio](https://perrylink.github.io/dsh-plugins/)
 - [Familia de checkers](https://perrylink.github.io/zh/checkers/)
