@@ -1,6 +1,6 @@
 {
   "name": "dsh-pim-lint",
-  "version": "0.1.0-alpha.10",
+  "version": "0.1.0-alpha.11",
   "description": "PIM catalog lint: required fields, duplicate SKU, GTIN check digit and price.",
   "type": "module",
   "main": "./lib/plugin/index.js",
@@ -79,5 +79,10 @@
   "bugs": {
     "url": "https://github.com/PerryLink/dsh-pim-lint/issues"
   },
-  "icon": "icon.svg"
+  "icon": "icon.svg",
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    }
+  }
 }
