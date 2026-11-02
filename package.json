@@ -1,6 +1,6 @@
 {
   "name": "dsh-pim-lint",
-  "version": "0.1.0-alpha.9",
+  "version": "0.1.0-alpha.10",
   "description": "PIM catalog lint: required fields, duplicate SKU, GTIN check digit and price.",
   "type": "module",
   "main": "./lib/plugin/index.js",
@@ -27,7 +27,6 @@
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
     "CHANGELOG.md",
-    "screenshots.json",
     "icon.svg"
   ],
   "dsh": {
@@ -36,7 +35,7 @@
     }
   },
   "engines": {
-    "dsh": ">=0.2.1-rc.3 <0.3.0",
+    "dsh": ">=0.2.1-rc.3 <0.4.0",
     "node": ">=24.9.0 <25"
   },
   "packageManager": "pnpm@11.28.5",
@@ -67,8 +66,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": ">=4.0.5 <5",
-    "@deepseek-ai/dsh-tools": ">=0.2.1-rc.3 <0.3.0"
+    "@deepseek-ai/cordis": ">=4.0.5 <5.0.0",
+    "@deepseek-ai/dsh-tools": ">=0.2.1-rc.3 <0.4.0"
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "4.0.5",
