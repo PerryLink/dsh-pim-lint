@@ -1,5 +1,50 @@
 export interface PimRow { sku: string; title: string; gtin: string; price: string }
 export interface PimIssue { sku: string; field: string; code: string }
+
+export type PimErrorCode = 'E_PIM_CSV_EMPTY' | 'E_PIM_HEADER' | 'E_PIM_CSV_ROW'
+
+/** User-facing wording: one plain sentence, the code, then exactly one next action. */
+const PIM_HUMAN: Record<PimErrorCode, { text: string; next: string }> = {
+  E_PIM_CSV_EMPTY: { text: '这个 CSV 里只有表头，没有商品行', next: '在表头下面补至少一行商品再跑一次' },
+  E_PIM_HEADER: { text: 'CSV 表头缺少必填列', next: '把表头改成 sku,title,gtin,price 四列（大小写不限）' },
+  E_PIM_CSV_ROW: { text: '有一行的列数和表头对不上', next: '用 Excel 另存为 CSV 重新导出，确保每行都是四列、没有多余逗号' },
+}
+
+export class PimError extends Error {
+  readonly code: PimErrorCode
+  /** Technical detail for logs — never shown to the user. */
+  readonly detail: string
+  constructor(code: PimErrorCode, detail = '') {
+    const human = PIM_HUMAN[code]
+    super(`${human.text}（${code}）｜下一步：${human.next}`)
+    this.name = 'PimError'
+    this.code = code
+    this.detail = detail
+  }
+}
+
+/** Split one CSV line, keeping empty cells and honouring double quotes and "" escapes. */
+function splitLine(line: string): string[] {
+  const cells: string[] = []
+  let cell = ''
+  let quoted = false
+  for (let i = 0; i < line.length; i += 1) {
+    const ch = line[i]!
+    if (quoted) {
+      if (ch === '"' && line[i + 1] === '"') {
+        cell += '"'
+        i += 1
+      } else if (ch === '"') quoted = false
+      else cell += ch
+    } else if (ch === '"' && cell.trim() === '') quoted = true
+    else if (ch === ',') {
+      cells.push(cell.trim())
+      cell = ''
+    } else cell += ch
+  }
+  cells.push(cell.trim())
+  return cells
+}
 export function gtinValid(raw: string): boolean {
   const digits = raw.replace(/[^0-9]/g, '')
   if (![8, 12, 13, 14].includes(digits.length) || digits !== raw) return false
@@ -27,13 +72,15 @@ export function gtinInfo(raw: string): GtinInfo {
 }
 
 export function parseCsv(text: string): PimRow[] {
-  const lines = text.trim().split(/\r?\n/).filter(Boolean)
-  if (lines.length < 2) throw new Error('E_PIM_CSV_EMPTY')
-  const header = lines[0]!.split(',').map((h) => h.trim().toLowerCase())
+  const lines = text.replace(/^\uFEFF/, '').trim().split(/\r?\n/).filter((line) => line.trim() !== '')
+  if (lines.length < 2) throw new PimError('E_PIM_CSV_EMPTY')
+  const header = splitLine(lines[0]!).map((h) => h.toLowerCase())
   const idx = (name: string) => header.indexOf(name)
-  for (const field of ['sku', 'title', 'gtin', 'price']) if (idx(field) < 0) throw new Error(`E_PIM_HEADER: ${field}`)
-  return lines.slice(1).map((line) => {
-    const cells = line.match(/(".*?"|[^,]+)(?=,|$)/g)?.map((v) => v.replace(/^"|"$/g, '').trim()) ?? []
+  for (const field of ['sku', 'title', 'gtin', 'price']) if (idx(field) < 0) throw new PimError('E_PIM_HEADER', field)
+  return lines.slice(1).map((line, rowIndex) => {
+    const cells = splitLine(line)
+    // A hand-edited CSV can shift every column after a missing comma; refuse it instead of guessing.
+    if (cells.length !== header.length) throw new PimError('E_PIM_CSV_ROW', `row ${rowIndex + 2}: expected ${header.length}, got ${cells.length}`)
     return { sku: cells[idx('sku')] ?? '', title: cells[idx('title')] ?? '', gtin: cells[idx('gtin')] ?? '', price: cells[idx('price')] ?? '' }
   })
 }

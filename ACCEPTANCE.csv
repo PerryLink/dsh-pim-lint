@@ -1,8 +1,9 @@
-req_id,metric,actual,pass,source,counted
-PIM-A01,valid catalog accepted,true,true,public/synthetic,false
-PIM-A02,duplicate/bad GTIN/price issues,true,true,public/synthetic,false
-PIM-A03,GTIN check digit,true,true,public/synthetic,false
-PIM-A04,GTIN-14 packaging indicator / variable measure,true,true,public/synthetic,false
-PIM-A05,duplicate GTIN reported,true,true,public/synthetic,false
-PIM-A06,over-precise price reported,true,true,public/synthetic,false
-PIM-A07,SSCC mod-10 check,true,true,public/synthetic,false
+req_id,metric,threshold,actual,script,evidence_sha256,pass,source,counted
+PIM-A01,valid catalog accepted,1/1,1,scripts/acceptance.mjs,b619b5d30147e5d32b6dcc8cc86dc4630b5b9e4c25c4bd226b29e95dd699fb94,true,public/synthetic,false
+PIM-A02,duplicate/bad GTIN/price issues,3,4,scripts/acceptance.mjs,b619b5d30147e5d32b6dcc8cc86dc4630b5b9e4c25c4bd226b29e95dd699fb94,true,public/synthetic,false
+PIM-A03,GTIN check digit,1/1,1,scripts/acceptance.mjs,b619b5d30147e5d32b6dcc8cc86dc4630b5b9e4c25c4bd226b29e95dd699fb94,true,public/synthetic,false
+PIM-A04,GTIN-14 packaging indicator / variable measure,9,9,scripts/acceptance.mjs,b619b5d30147e5d32b6dcc8cc86dc4630b5b9e4c25c4bd226b29e95dd699fb94,true,public/synthetic,false
+PIM-A05,duplicate GTIN reported,1,1,scripts/acceptance.mjs,b619b5d30147e5d32b6dcc8cc86dc4630b5b9e4c25c4bd226b29e95dd699fb94,true,public/synthetic,false
+PIM-A06,over-precise price reported,1,1,scripts/acceptance.mjs,b619b5d30147e5d32b6dcc8cc86dc4630b5b9e4c25c4bd226b29e95dd699fb94,true,public/synthetic,false
+PIM-A07,SSCC mod-10 check,1,1,scripts/acceptance.mjs,b619b5d30147e5d32b6dcc8cc86dc4630b5b9e4c25c4bd226b29e95dd699fb94,true,public/synthetic,false
+PS1-QS01,quickstart 样例与金标一致,1/1,1,scripts/acceptance.mjs,8ec26f4f03fdfab708172b98887bbd9e836aa1bdc5df92a23453ee9e7e3b0285,true,synthetic/quickstart,true

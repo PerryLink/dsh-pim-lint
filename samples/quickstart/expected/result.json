@@ -1,0 +1,77 @@
+{
+  "sample": "samples/quickstart/input/catalog.csv",
+  "rows": 12,
+  "issues": 8,
+  "issues_by_code": {
+    "E_PIM_GTIN_DUPLICATE": 3,
+    "E_PIM_GTIN_INVALID": 1,
+    "E_PIM_PRICE_INVALID": 1,
+    "E_PIM_PRICE_PRECISION": 1,
+    "E_PIM_SKU_DUPLICATE": 1,
+    "E_PIM_TITLE_REQUIRED": 1
+  },
+  "issues_detail": [
+    {
+      "sku": "SKU-1003",
+      "field": "gtin",
+      "code": "E_PIM_GTIN_DUPLICATE"
+    },
+    {
+      "sku": "SKU-1004",
+      "field": "gtin",
+      "code": "E_PIM_GTIN_INVALID"
+    },
+    {
+      "sku": "SKU-1005",
+      "field": "gtin",
+      "code": "E_PIM_GTIN_DUPLICATE"
+    },
+    {
+      "sku": "SKU-1005",
+      "field": "price",
+      "code": "E_PIM_PRICE_PRECISION"
+    },
+    {
+      "sku": "SKU-1008",
+      "field": "title",
+      "code": "E_PIM_TITLE_REQUIRED"
+    },
+    {
+      "sku": "SKU-1009",
+      "field": "price",
+      "code": "E_PIM_PRICE_INVALID"
+    },
+    {
+      "sku": "SKU-1002",
+      "field": "sku",
+      "code": "E_PIM_SKU_DUPLICATE"
+    },
+    {
+      "sku": "SKU-1002",
+      "field": "gtin",
+      "code": "E_PIM_GTIN_DUPLICATE"
+    }
+  ],
+  "checks": [
+    {
+      "gtin": "94006381333934",
+      "format": "GTIN-14",
+      "gtin_valid": true,
+      "packaging_indicator": 9,
+      "variable_measure": true,
+      "sscc": "340123450000000017",
+      "sscc_valid": true,
+      "sscc_reason": null
+    },
+    {
+      "gtin": "4006381333932",
+      "format": "GTIN-13",
+      "gtin_valid": false,
+      "packaging_indicator": null,
+      "variable_measure": false,
+      "sscc": "340123450000000018",
+      "sscc_valid": false,
+      "sscc_reason": "E_PIM_SSCC_CHECKSUM"
+    }
+  ]
+}

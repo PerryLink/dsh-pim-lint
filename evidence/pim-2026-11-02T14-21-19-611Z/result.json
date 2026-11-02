@@ -1,0 +1,59 @@
+{
+  "run_id": "pim-2026-11-02T14-21-19-611Z",
+  "scope": "PIM-S1",
+  "status": "partial",
+  "counted": false,
+  "note": "synthetic catalog; 0 real products",
+  "metrics": [
+    {
+      "i": "PIM-A01",
+      "m": "valid catalog accepted",
+      "t": "1/1",
+      "a": 1,
+      "p": true
+    },
+    {
+      "i": "PIM-A02",
+      "m": "duplicate/bad GTIN/price issues",
+      "t": "3",
+      "a": 4,
+      "p": true
+    },
+    {
+      "i": "PIM-A03",
+      "m": "GTIN check digit",
+      "t": "1/1",
+      "a": 1,
+      "p": true
+    },
+    {
+      "i": "PIM-A04",
+      "m": "GTIN-14 packaging indicator / variable measure",
+      "t": "9",
+      "a": 9,
+      "p": true
+    },
+    {
+      "i": "PIM-A05",
+      "m": "duplicate GTIN reported",
+      "t": "1",
+      "a": 1,
+      "p": true
+    },
+    {
+      "i": "PIM-A06",
+      "m": "over-precise price reported",
+      "t": "1",
+      "a": 1,
+      "p": true
+    },
+    {
+      "i": "PIM-A07",
+      "m": "SSCC mod-10 check",
+      "t": "1",
+      "a": 1,
+      "p": true
+    }
+  ],
+  "pass": true
+}

@@ -31,6 +31,74 @@ dsh plugin --profile <profile> add dsh-pim-lint
 
 </div>
 
+## 一句话
+
+把商品目录 CSV 逐行查错：重复 SKU、GTIN 校验位、价格精度，输出问题清单。
+
+## 适合 / 不适合
+
+- **适合**：几十到几千行的商品主数据表（CSV）；上新或调价前先自查重复编码、条码和价格格式。
+- **不适合**：没有 SKU 或条码的自由文本商品描述；直连天猫/京东/ERP（本包不连外部系统）；替代 GS1 官方注册或渠道审核。
+
+## 输入
+
+- 格式：UTF-8 CSV（带不带 BOM 都行），表头必须含 `sku,title,gtin,price` 四列（大小写不限，允许其他列）；`gtin` 可空，`price` 用两位小数。
+- 大小：单表建议 ≤ 5 MB（约 2 万行），没有内置硬上限；更大请先按品牌或类目拆表。
+- 来源：从 PIM / ERP / Excel 导出后另存为 CSV；原文件不会被修改。
+
+## 输出
+
+- 终端问题清单：每条给出 `SKU / 字段 / 错误码`（如 `SKU-1004 / gtin / E_PIM_GTIN_INVALID`），以及 GTIN 结构、SSCC 校验结果。
+- 不落盘：四个工具都是只读（R0），不写 `$DSH_HOME`，也不改你的 CSV。
+- 样例金标：`samples/quickstart/expected/result.json`（由真实运行产生）。
+
+## 示例
+
+直接复制下面这句：
+
+> 我有一份商品目录 CSV，帮我查重复 SKU、GTIN 校验位和价格精度，把问题按 SKU 列出来。
+
+用自带样例复跑并核对金标：
+
+```sh
+node samples/quickstart/run.mjs --check
+```
+
+![dsh-pim-lint quickstart 真实运行输出](docs/assets/quickstart.png)
+
+截图就是上面这条命令的真实输出；金标比对结果见 `samples/quickstart/expected/result.json`。
+
+## 权限
+
+读：用户指定的商品目录 CSV；不读其他目录
+写：无；四个工具全部只读，不落盘、不改原文件
+联网：否
+外部系统：无
+
+四个工具 `pim.validate`、`pim.gtin_check`、`pim.gtin_structure`、`pim.sscc_check` 均为 **R0**（只读），没有 R1 写工具。
+
+## FAQ
+
+### 1. 装不上怎么办？
+
+确认 Node `>=24.9 <25`、DSH `>=0.2.1-rc.3 <0.4.0`，再执行 `dsh plugin --profile <profile> add dsh-pim-lint`。仍失败先看 `TROUBLESHOOTING.md` 第 1 条。
+
+### 2. 结果不对怎么办？
+
+先跑 `node samples/quickstart/run.mjs --check`；再检查表头是否为 `sku,title,gtin,price`、文件是否 UTF-8。GTIN 只认 8/12/13/14 位纯数字，带空格或字母一律算不合法。
+
+### 3. 能处理我的文件吗？
+
+能。UTF-8 CSV、单表 ≤5 MB 的目录在本地读、本地算，不上传、不联网。真实商品数据不要贴进 issue。
+
+### 4. 会改我的目录吗？
+
+不会。全部工具只读，不写任何文件；问题清单只在终端和返回值里。
+
+## 版本
+
+`0.1.0-alpha.12` · 10 项测试通过（`node --test test/*.test.mjs`）。
+
 > ⭐ 如果它帮到了你，点个 star 会让下一个人更容易找到它；没有任何功能被 star 解锁。
 
 ![Workflow diagram for dsh-pim-lint: local input, plugin, local output.](docs/assets/dsh-pim-lint-flow.svg)

@@ -1,5 +1,18 @@
 [
   {
+    "path": "docs/assets/quickstart.png",
+    "kind": "quickstart",
+    "alt": "dsh-pim-lint quickstart terminal output",
+    "caption": "Real command: node samples/quickstart/run.mjs --check — synthetic catalog, 12 rows in / 8 issues out (3 duplicate GTIN, 1 bad check digit, 1 duplicate SKU, 1 missing title, 1 bad price, 1 price precision), plus one GTIN-14 variable-measure code and one bad SSCC. Rendered from the captured terminal output.",
+    "command": "node samples/quickstart/run.mjs --check",
+    "run_at": "2026-11-02T14:13:19Z",
+    "output_sha256": "8ec26f4f03fdfab708172b98887bbd9e836aa1bdc5df92a23453ee9e7e3b0285",
+    "output_path": "samples/quickstart/expected/result.json",
+    "log": "docs/assets/quickstart.log",
+    "log_sha256": "8f540959b18e0738348c79a335a954639c991ee6fe1684befb08a6bf8a09e81c",
+    "image_sha256": "320628c1b53388ee82d9b1609b6870b756c21e35cebb9ff8d8ec47ed2d0f67ea"
+  },
+  {
     "path": "docs/assets/dsh-pim-lint-capability.png",
     "kind": "capability",
     "alt": "dsh-pim-lint real test run",
