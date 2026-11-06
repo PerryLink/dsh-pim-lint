@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-pim-lint-flow-dark.svg">
-  <img src="docs/assets/dsh-pim-lint-flow-light.svg" width="100%" alt="Cadena de herramientas de dsh-pim-lint: catalog.csv → pim.validate → pim.gtin_check → pim.gtin_structure → pim.sscc_check; la lista de problemas se da como SKU / campo / código de error; todo local y de solo lectura">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-pim-lint-hero-en-dark.webp">
+  <img src="docs/assets/dsh-pim-lint-hero-en-light.webp" width="100%" alt="Banner de dsh-pim-lint: a la derecha, un recorte de 4 de las 12 filas del catalog.csv sintético; tres filas con problemas conectan con tarjetas de issues[] (SKU-1004 / gtin / E_PIM_GTIN_INVALID, SKU-1005 / price / E_PIM_PRICE_PRECISION, SKU-1008 / title / E_PIM_TITLE_REQUIRED); abajo, el GTIN-14 94006381333934 como regla de dígito de control 3·1, con dígito 4, indicator 9 y variable_measure">
 </picture>
 
 # dsh-pim-lint
@@ -39,6 +39,11 @@ El primer tramo del dato maestro de producto: pasa un CSV de catálogo exportado
 
 - **Encaja**: tablas de datos maestros de decenas a miles de filas (CSV UTF-8); una autocomprobación de códigos duplicados, códigos de barras y formatos de precio antes de un lanzamiento o un cambio de precios.
 - **No encaja**: descripciones de producto en texto libre sin SKU ni código de barras; una conexión directa con Tmall / JD / ERP (este paquete no habla con ningún sistema externo); sustituir un registro GS1 o una revisión de canal.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-pim-lint-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-pim-lint-flow-v5-light.svg" width="100%" alt="Estructura de dsh-pim-lint: dos canales. El canal A pasa catalog.csv por el guardián CSV (E_PIM_CSV_EMPTY / E_PIM_HEADER / E_PIM_CSV_ROW lanzan error, nunca son issues), luego 12 filas entran en una matriz de 4 campos × 7 reglas (SKU obligatorio/duplicado, title obligatorio, GTIN inválido/duplicado, price inválido/precisión) y producen issues[] con SKU / campo / código. El canal B comprueba un GTIN-8/12/13/14 (formato, indicador de empaque, medida variable) y un SSCC de 18 dígitos (formato frente a checksum mod-10). Las tres formas de retorno quedan en memoria; R0, sin escrituras">
+</picture>
 
 ## Instalación en tres pasos
 
@@ -290,7 +295,7 @@ node scripts/acceptance.mjs                                 # repetir la aceptac
 node samples/quickstart/run.mjs --check                     # muestra contra el archivo dorado; debe imprimir quickstart ok
 ```
 
-Versión actual `0.1.1` (coincide con `package.json`). Pruebas: `node --test test/*.test.mjs` en verde con 10 casos en 4 archivos (`pim.test.mjs` 5, `sscc.test.mjs` 3, `plugin-smoke.test.mjs` 1, `quickstart.test.mjs` 1; `pnpm test` ya incluye el build). Estructura: el código TypeScript está en `src/` (`src/core/pim.ts` contiene el análisis de CSV y las comprobaciones GTIN y SSCC; `src/plugin/` es la cara host y el registro de herramientas), la salida de compilación en `lib/` (en gitignore; solo el paquete npm la lleva), la muestra sintética en `samples/quickstart/`, los registros de aceptación en `evidence/` y las imágenes en `docs/assets/`. El diagrama de apertura lo genera [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python; par SVG claro/oscuro compartido por los cinco idiomas) y se puede repetir con `python scripts/gen-readme-assets.py`.
+Versión actual `0.1.1` (coincide con `package.json`). Pruebas: `node --test test/*.test.mjs` en verde con 10 casos en 4 archivos (`pim.test.mjs` 5, `sscc.test.mjs` 3, `plugin-smoke.test.mjs` 1, `quickstart.test.mjs` 1; `pnpm test` ya incluye el build). Estructura: el código TypeScript está en `src/` (`src/core/pim.ts` contiene el análisis de CSV y las comprobaciones GTIN y SSCC; `src/plugin/` es la cara host y el registro de herramientas), la salida de compilación en `lib/` (en gitignore; solo el paquete npm la lleva), la muestra sintética en `samples/quickstart/`, los registros de aceptación en `evidence/` y las imágenes en `docs/assets/`. El hero y el diagrama de estructura los genera [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow genera los heroes de 1440×576 zh/en en claro/oscuro; un SVG escrito a mano genera el diagrama de estructura de 1100×660; compartido por los cinco idiomas) y se puede repetir con `python scripts/gen-readme-assets.py`.
 
 Temas: `deepseek-harness`, `dsh`, `dsh-plugin`, `pim`, `gtin`, `perrylink`, `catalog`, `lint`
 

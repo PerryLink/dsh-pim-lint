@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-pim-lint-flow-dark.svg">
-  <img src="docs/assets/dsh-pim-lint-flow-light.svg" width="100%" alt="dsh-pim-lint टूल चेन: catalog.csv → pim.validate → pim.gtin_check → pim.gtin_structure → pim.sscc_check; समस्याओं की सूची SKU / फ़ील्ड / एरर कोड के रूप में मिलती है; पूरा काम लोकल और रीड-ओनली">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-pim-lint-hero-en-dark.webp">
+  <img src="docs/assets/dsh-pim-lint-hero-en-light.webp" width="100%" alt="dsh-pim-lint बैनर: दाईं ओर synthetic catalog.csv की 12 में से 4 पंक्तियों का अंश; तीन समस्या-पंक्तियाँ issues[] कार्ड से जुड़ती हैं (SKU-1004 / gtin / E_PIM_GTIN_INVALID, SKU-1005 / price / E_PIM_PRICE_PRECISION, SKU-1008 / title / E_PIM_TITLE_REQUIRED); नीचे GTIN-14 94006381333934 3·1 चेक-डिजिट रूलर के रूप में, चेक डिजिट 4, indicator 9 और variable_measure">
 </picture>
 
 # dsh-pim-lint
@@ -39,6 +39,11 @@ dsh plugin --profile <profile> add dsh-pim-lint
 
 - **उपयुक्त**: दसियों से हज़ारों पंक्तियों की प्रोडक्ट मास्टर तालिकाएँ (UTF-8 CSV); लॉन्च या मूल्य-परिवर्तन से पहले डुप्लिकेट कोड, बारकोड और कीमत के फ़ॉर्मैट की स्वयं-जाँच।
 - **उपयुक्त नहीं**: बिना SKU या बारकोड वाले मुक्त-पाठ प्रोडक्ट विवरण; Tmall / JD / ERP से सीधा कनेक्शन (यह पैकेज किसी बाहरी सिस्टम से बात नहीं करता); GS1 पंजीकरण या चैनल समीक्षा का विकल्प बनना।
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-pim-lint-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-pim-lint-flow-v5-light.svg" width="100%" alt="dsh-pim-lint संरचना: दो चैनल। चैनल A catalog.csv को CSV गार्ड से गुज़ारता है (E_PIM_CSV_EMPTY / E_PIM_HEADER / E_PIM_CSV_ROW सीधे throw, issues नहीं), फिर 12 पंक्तियाँ 4 फ़ील्ड × 7 नियम मैट्रिक्स में जाती हैं (SKU अनिवार्य/डुप्लिकेट, title अनिवार्य, GTIN अमान्य/डुप्लिकेट, price अमान्य/सटीकता) और SKU / फ़ील्ड / कोड वाली issues[] बनाती हैं। चैनल B GTIN-8/12/13/14 (फ़ॉर्मैट, पैकेजिंग इंडिकेटर, वेरिएबल मेज़र) और 18 अंकों वाला SSCC (फ़ॉर्मैट बनाम mod-10 चेकसम) जाँचता है। तीनों रिटर्न आकार मेमोरी में रहते हैं; R0, कोई लेखन नहीं">
+</picture>
 
 ## तीन चरणों में शुरुआत
 
@@ -290,7 +295,7 @@ node scripts/acceptance.mjs                                 # सार्वज
 node samples/quickstart/run.mjs --check                     # गोल्डन फ़ाइल से सैंपल मिलान; quickstart ok प्रिंट होना चाहिए
 ```
 
-मौजूदा संस्करण `0.1.1` (`package.json` के अनुरूप)। टेस्ट: `node --test test/*.test.mjs` 4 फ़ाइलों में 10 केस के साथ हरा (`pim.test.mjs` 5, `sscc.test.mjs` 3, `plugin-smoke.test.mjs` 1, `quickstart.test.mjs` 1; `pnpm test` में बिल्ड पहले से शामिल है)। संरचना: TypeScript सोर्स `src/` में (`src/core/pim.ts` में CSV पार्सिंग और GTIN व SSCC जाँच; `src/plugin/` होस्ट फ़ेस और टूल रजिस्ट्रेशन), बिल्ड आउटपुट `lib/` में (gitignore; केवल npm पैकेज में जाता है), सिंथेटिक सैंपल `samples/quickstart/` में, स्वीकृति रिकॉर्ड `evidence/` में और चित्र `docs/assets/` में। शुरुआती डायग्राम [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) से बनता है (Python; पाँचों भाषाओं के लिए साझा light/dark SVG जोड़ी) और `python scripts/gen-readme-assets.py` से दोबारा चलाया जा सकता है।
+मौजूदा संस्करण `0.1.1` (`package.json` के अनुरूप)। टेस्ट: `node --test test/*.test.mjs` 4 फ़ाइलों में 10 केस के साथ हरा (`pim.test.mjs` 5, `sscc.test.mjs` 3, `plugin-smoke.test.mjs` 1, `quickstart.test.mjs` 1; `pnpm test` में बिल्ड पहले से शामिल है)। संरचना: TypeScript सोर्स `src/` में (`src/core/pim.ts` में CSV पार्सिंग और GTIN व SSCC जाँच; `src/plugin/` होस्ट फ़ेस और टूल रजिस्ट्रेशन), बिल्ड आउटपुट `lib/` में (gitignore; केवल npm पैकेज में जाता है), सिंथेटिक सैंपल `samples/quickstart/` में, स्वीकृति रिकॉर्ड `evidence/` में और चित्र `docs/assets/` में। शुरुआती hero और संरचना डायग्राम [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) से बनते हैं (Pillow 1440×576 के zh/en light/dark hero बनाता है; हाथ से लिखा SVG 1100×660 का संरचना डायग्राम बनाता है; पाँचों भाषाओं में साझा) और `python scripts/gen-readme-assets.py` से दोबारा चलाए जा सकते हैं।
 
 विषय: `deepseek-harness`, `dsh`, `dsh-plugin`, `pim`, `gtin`, `perrylink`, `catalog`, `lint`
 

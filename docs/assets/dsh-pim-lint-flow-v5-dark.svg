@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="660" viewBox="0 0 1100 660" role="img" aria-labelledby="fig-title fig-desc">
+<title id="fig-title">dsh-pim-lint: two channels — whole-table rule matrix and single-code GS1 probe, one in-memory return</title>
+<desc id="fig-desc">Channel A: catalog.csv goes through a CSV guard (E_PIM_CSV_EMPTY / E_PIM_HEADER / E_PIM_CSV_ROW throw, never an issue), then 12 rows enter a 4-field x 7-rule matrix (SKU required/duplicate, title required, GTIN invalid/duplicate, price invalid/precision) and produce issues[] as SKU/field/code. Channel B checks a 14-digit GTIN for format, packaging indicator and variable measure, and an 18-digit SSCC for format versus mod-10 checksum. All returns stay in memory: R0, no file writes, no network, no model call.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="0.34" y2="1">
+    <stop offset="0" stop-color="#131a2a"/>
+    <stop offset="1" stop-color="#0c1016"/>
+  </linearGradient>
+  <radialGradient id="halo" cx="0.75" cy="0.05" r="0.7">
+    <stop offset="0" stop-color="#8496f5" stop-opacity="0.16"/>
+    <stop offset="1" stop-color="#8496f5" stop-opacity="0"/>
+  </radialGradient>
+  <filter id="soft" x="-12%" y="-18%" width="124%" height="142%">
+    <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#000000" flood-opacity="0.50"/>
+  </filter>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.4" markerHeight="6.4" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#8496f5"/>
+  </marker>
+</defs>
+<rect x="0" y="0" width="1100" height="660" rx="0" fill="url(#bg)" />
+<rect x="0" y="0" width="1100" height="660" rx="0" fill="url(#halo)" />
+<text x="44" y="54" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="28" font-weight="700">dsh-pim-lint</text>
+<text x="44" y="84" fill="#a8b1c4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="15">整表逐行扫描 ↔ 单码探针：两条通道，同一套 GS1 算术；结果只在内存。</text>
+<rect x="844" y="34" width="212" height="28" rx="14" fill="#242d42" />
+<text x="950" y="53" fill="#8496f5" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="12" font-weight="700" text-anchor="middle">v0.1.1 · R0 · 本地</text>
+<line x1="44" y1="104" x2="1056" y2="104" stroke="#1e2636" stroke-width="1.4"/>
+<g filter="url(#soft)"><rect x="44" y="116" width="700" height="384" rx="20" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" /></g>
+<text x="64" y="143" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">通道 A · 整表 pim.validate</text>
+<text x="724" y="143" fill="#737b8d" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="end">rows 12 · issues 8</text>
+<rect x="64" y="158" width="208" height="104" rx="14" fill="#171e2d" stroke="#2a3348" stroke-width="1.4" />
+<path d="M80 178h11l5 5v15h-16z" fill="none" stroke="#8496f5" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M91 178v5h5" fill="none" stroke="#8496f5" stroke-width="1.6"/>
+<text x="104" y="185" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="14" font-weight="700">catalog.csv</text>
+<text x="80" y="208" fill="#a8b1c4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11">UTF-8 · 12 行 × 4 列</text>
+<line x1="80" y1="216" x2="256" y2="216" stroke="#2a3348" stroke-width="1"/>
+<text x="80" y="234" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">sku,title,gtin,price</text>
+<text x="80" y="250" fill="#737b8d" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11">BOM 可省 · 列数须一致</text>
+<line x1="274" y1="210" x2="306" y2="210" stroke="#8496f5" stroke-width="2.2" marker-end="url(#arr)"/>
+<rect x="318" y="158" width="198" height="104" rx="14" fill="#33241c" stroke="#f0883e" stroke-width="1.2" />
+<circle cx="330" cy="178" r="3.2" fill="#f0883e"/>
+<text x="340" y="183" fill="#f0f3f9" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="13" font-weight="700">CSV 守卫</text>
+<text x="332" y="203" fill="#f0883e" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">E_PIM_CSV_EMPTY</text>
+<text x="332" y="218" fill="#f0883e" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">E_PIM_HEADER</text>
+<text x="332" y="233" fill="#f0883e" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">E_PIM_CSV_ROW</text>
+<text x="332" y="251" fill="#f0883e" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11" font-weight="700">硬失败 → throw</text>
+<line x1="518" y1="210" x2="544" y2="210" stroke="#8496f5" stroke-width="2.2" marker-end="url(#arr)"/>
+<rect x="548" y="184" width="176" height="54" rx="12" fill="#171e2d" stroke="#2a3348" stroke-width="1.4" />
+<text x="562" y="207" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="14" font-weight="700">rows[] · 12</text>
+<text x="562" y="226" fill="#a8b1c4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11">逐行进入检查矩阵</text>
+<path d="M636 240v28" fill="none" stroke="#8496f5" stroke-width="2.2" marker-end="url(#arr)"/>
+<rect x="60" y="276" width="668" height="156" rx="16" fill="#171e2d" stroke="#2a3348" stroke-width="1.4" />
+<text x="76" y="300" fill="#f0f3f9" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="12" font-weight="700">逐行扫描 · 4 字段 × 7 条规则</text>
+<text x="712" y="300" fill="#737b8d" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11" text-anchor="end">命中即一条 issue</text>
+<line x1="76" y1="310" x2="712" y2="310" stroke="#2a3348" stroke-width="1"/>
+<text x="76" y="334" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="14" font-weight="700">sku</text>
+<text x="228" y="334" fill="#737b8d" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="end">×1</text>
+<rect x="76" y="344" width="152" height="25" rx="7" fill="#202a44" stroke="#2a3348" stroke-width="1.1" />
+<line x1="77.5" y1="349" x2="77.5" y2="364" stroke="#8496f5" stroke-width="2.4" stroke-linecap="round"/>
+<text x="84" y="361" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">E_PIM_SKU_REQUIRED</text>
+<rect x="76" y="376" width="152" height="25" rx="7" fill="#202a44" stroke="#2a3348" stroke-width="1.1" />
+<line x1="77.5" y1="381" x2="77.5" y2="396" stroke="#8496f5" stroke-width="2.4" stroke-linecap="round"/>
+<text x="84" y="393" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">E_PIM_SKU_DUPLICATE</text>
+<text x="238" y="334" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="14" font-weight="700">title</text>
+<text x="390" y="334" fill="#737b8d" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="end">×1</text>
+<rect x="238" y="344" width="152" height="25" rx="7" fill="#202a44" stroke="#2a3348" stroke-width="1.1" />
+<line x1="239.5" y1="349" x2="239.5" y2="364" stroke="#8496f5" stroke-width="2.4" stroke-linecap="round"/>
+<text x="246" y="361" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">E_PIM_TITLE_REQUIRED</text>
+<rect x="238" y="376" width="152" height="25" rx="7" fill="none" stroke="#2a3348" stroke-width="1.1" stroke-dasharray="4 4" />
+<text x="246" y="393" fill="#737b8d" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11">仅 1 条规则</text>
+<text x="400" y="334" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="14" font-weight="700">gtin</text>
+<text x="552" y="334" fill="#737b8d" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="end">×4</text>
+<rect x="400" y="344" width="152" height="25" rx="7" fill="#202a44" stroke="#2a3348" stroke-width="1.1" />
+<line x1="401.5" y1="349" x2="401.5" y2="364" stroke="#8496f5" stroke-width="2.4" stroke-linecap="round"/>
+<text x="408" y="361" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">E_PIM_GTIN_INVALID</text>
+<rect x="400" y="376" width="152" height="25" rx="7" fill="#202a44" stroke="#2a3348" stroke-width="1.1" />
+<line x1="401.5" y1="381" x2="401.5" y2="396" stroke="#8496f5" stroke-width="2.4" stroke-linecap="round"/>
+<text x="408" y="393" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">E_PIM_GTIN_DUPLICATE</text>
+<text x="562" y="334" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="14" font-weight="700">price</text>
+<text x="714" y="334" fill="#737b8d" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="end">×2</text>
+<rect x="562" y="344" width="152" height="25" rx="7" fill="#202a44" stroke="#2a3348" stroke-width="1.1" />
+<line x1="563.5" y1="349" x2="563.5" y2="364" stroke="#8496f5" stroke-width="2.4" stroke-linecap="round"/>
+<text x="570" y="361" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">E_PIM_PRICE_INVALID</text>
+<rect x="562" y="376" width="152" height="25" rx="7" fill="#202a44" stroke="#2a3348" stroke-width="1.1" />
+<line x1="563.5" y1="381" x2="563.5" y2="396" stroke="#8496f5" stroke-width="2.4" stroke-linecap="round"/>
+<text x="570" y="393" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">E_PIM_PRICE_PRECISION</text>
+<text x="76" y="420" fill="#a8b1c4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11">CSV 守卫 3 类错误直接 throw；其余 7 条命中逐行追加 → issues[]</text>
+<text x="64" y="458" fill="#a8b1c4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="12">issues[] 8 条 · 例：</text>
+<text x="204" y="458" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">SKU-1004 / gtin / E_PIM_GTIN_INVALID</text>
+<text x="724" y="458" fill="#737b8d" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11" text-anchor="end">12 行 → 8 条</text>
+<g filter="url(#soft)"><rect x="756" y="116" width="300" height="384" rx="20" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" /></g>
+<text x="776" y="143" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">通道 B · 单码探针</text>
+<text x="1036" y="143" fill="#737b8d" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="end">single code</text>
+<rect x="772" y="158" width="268" height="152" rx="14" fill="#171e2d" stroke="#2a3348" stroke-width="1.4" />
+<text x="786" y="181" fill="#a8b1c4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">gtin_check · gtin_structure</text>
+<rect x="786" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="794.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">9</text>
+<rect x="803" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="811.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">4</text>
+<rect x="820" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="828.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">0</text>
+<rect x="837" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="845.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">0</text>
+<rect x="854" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="862.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">6</text>
+<rect x="871" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="879.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">3</text>
+<rect x="888" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="896.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">8</text>
+<rect x="905" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="913.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">1</text>
+<rect x="922" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="930.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">3</text>
+<rect x="939" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="947.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">3</text>
+<rect x="956" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="964.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">3</text>
+<rect x="973" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="981.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">9</text>
+<rect x="990" y="192" width="16" height="30" rx="4" fill="#202a44" stroke="#2a3348" stroke-width="1" />
+<text x="998.0" y="212" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">3</text>
+<rect x="1007" y="192" width="16" height="30" rx="4" fill="#8496f5" stroke="#8496f5" stroke-width="1.6" />
+<text x="1015.0" y="212" fill="#0c1016" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="middle">4</text>
+<text x="786" y="246" fill="#a8b1c4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">3/1 加权 mod-10 · 校验位 4</text>
+<text x="1024" y="246" fill="#3fb950" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" font-weight="700" text-anchor="end">OK</text>
+<text x="786" y="268" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">GTIN-14 · indicator 9</text>
+<text x="786" y="286" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">variable_measure = true</text>
+<line x1="776" y1="322" x2="1036" y2="322" stroke="#1e2636" stroke-width="1"/>
+<text x="776" y="346" fill="#a8b1c4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">pim.sscc_check</text>
+<text x="776" y="372" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">340123450000000018</text>
+<text x="1036" y="372" fill="#f0883e" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11" text-anchor="end">× 校验位</text>
+<text x="776" y="394" fill="#a8b1c4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11">剔除空白 → 18 位数字 → mod-10</text>
+<rect x="776" y="404" width="192" height="25" rx="7" fill="#33241c" stroke="#f0883e" stroke-width="1.2" />
+<text x="786" y="421" fill="#f0883e" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">× E_PIM_SSCC_CHECKSUM</text>
+<text x="776" y="452" fill="#737b8d" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11">格式错 / 校验位错 → 两个 reason</text>
+<text x="776" y="472" fill="#737b8d" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11">另一种：格式错 E_PIM_SSCC_FORMAT</text>
+<g filter="url(#soft)"><rect x="44" y="512" width="1012" height="116" rx="20" fill="#1b2231" stroke="#2e374b" stroke-width="1.5" /></g>
+<text x="66" y="538" fill="#f0f3f9" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="12" font-weight="700">返回值 · 进程内，不落盘</text>
+<text x="1034" y="538" fill="#737b8d" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11" text-anchor="end">R0 · 无网络 · 无模型</text>
+<rect x="64" y="550" width="318" height="62" rx="12" fill="#171e2d" stroke="#2a3348" stroke-width="1.4" />
+<text x="78" y="570" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">pim.validate</text>
+<text x="78" y="591" fill="#f0f3f9" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="12">{ rows, issues[] }</text>
+<text x="370" y="591" fill="#3fb950" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="end">12 / 8</text>
+<rect x="394" y="550" width="448" height="62" rx="12" fill="#171e2d" stroke="#2a3348" stroke-width="1.4" />
+<text x="408" y="570" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">pim.gtin_check   → { gtin, valid }</text>
+<text x="408" y="591" fill="#a8b1c4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">pim.gtin_structure → { format, indicator?, variable_measure }</text>
+<rect x="854" y="550" width="188" height="62" rx="12" fill="#171e2d" stroke="#2a3348" stroke-width="1.4" />
+<text x="868" y="570" fill="#8496f5" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">pim.sscc_check</text>
+<text x="868" y="591" fill="#a8b1c4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">{ sscc, valid, reason? }</text>
+<text x="44" y="650" fill="#a8b1c4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11.5">GTIN-14 首位：0 基础 · 1–8 包装 · 9 变度量 · SSCC 18 位先剔空白 · R0 全程不写文件</text>
+<text x="1056" y="650" fill="#737b8d" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11" text-anchor="end">12 行样例 → 8 条问题</text>
+</svg>

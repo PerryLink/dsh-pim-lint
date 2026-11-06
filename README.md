@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-pim-lint-flow-dark.svg">
-  <img src="docs/assets/dsh-pim-lint-flow-light.svg" width="100%" alt="dsh-pim-lint 工具链：catalog.csv → pim.validate → pim.gtin_check → pim.gtin_structure → pim.sscc_check；问题清单按 SKU / 字段 / 错误码给出，全程本地、只读">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-pim-lint-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-pim-lint-hero-zh-light.webp" width="100%" alt="dsh-pim-lint 横幅：右侧是 12 行合成商品目录 catalog.csv 的 4 行节选，三行问题分别接到 issues[] 卡片（SKU-1004 / gtin / E_PIM_GTIN_INVALID、SKU-1005 / price / E_PIM_PRICE_PRECISION、SKU-1008 / title / E_PIM_TITLE_REQUIRED）；下方是 GTIN-14 94006381333934 的 3·1 加权校验位尺，校验位 4、indicator 9、variable_measure">
 </picture>
 
 # dsh-pim-lint
@@ -39,6 +39,11 @@ dsh plugin --profile <profile> add dsh-pim-lint
 
 - **适合**：几十到几千行的商品主数据表（UTF-8 CSV）；上新或调价前先自查重复编码、条码和价格格式。
 - **不适合**：没有 SKU 或条码的自由文本商品描述；直连天猫 / 京东 / ERP（本包不连外部系统）；替代 GS1 官方注册或渠道审核。
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-pim-lint-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-pim-lint-flow-v5-light.svg" width="100%" alt="dsh-pim-lint 结构：两条通道。通道 A 把 catalog.csv 先过 CSV 守卫（E_PIM_CSV_EMPTY / E_PIM_HEADER / E_PIM_CSV_ROW 直接 throw），12 行再进 4 字段 × 7 条规则的检查矩阵（SKU 必填/重复、title 必填、GTIN 非法/重复、price 非法/精度），产出 SKU / 字段 / 错误码的 issues[]；通道 B 用单码探针检查 GTIN-8/12/13/14（格式、包装指示位、变度量）与 18 位 SSCC（格式错与 mod-10 校验位错分开报）；三条返回值都只在内存，R0 不落盘">
+</picture>
 
 ## 三步上手
 
@@ -290,7 +295,7 @@ node scripts/acceptance.mjs                                 # 单独重跑公开
 node samples/quickstart/run.mjs --check                     # 合成样例对照金标，应输出 quickstart ok
 ```
 
-当前版本 `0.1.1`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs` 共 10 个用例、4 个文件全绿（`pim.test.mjs` 5 个、`sscc.test.mjs` 3 个、`plugin-smoke.test.mjs` 1 个、`quickstart.test.mjs` 1 个；`pnpm test` 已内置构建）。目录布局：TypeScript 源码在 `src/`（`src/core/pim.ts` 是 CSV 解析、GTIN 与 SSCC 校验；`src/plugin/` 是宿主面与工具注册），构建产物在 `lib/`（gitignore，npm 包内才有），合成样例在 `samples/quickstart/`，验收记录在 `evidence/`，配图在 `docs/assets/`。开头流程图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python；SVG 深浅双版、五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
+当前版本 `0.1.1`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs` 共 10 个用例、4 个文件全绿（`pim.test.mjs` 5 个、`sscc.test.mjs` 3 个、`plugin-smoke.test.mjs` 1 个、`quickstart.test.mjs` 1 个；`pnpm test` 已内置构建）。目录布局：TypeScript 源码在 `src/`（`src/core/pim.ts` 是 CSV 解析、GTIN 与 SSCC 校验；`src/plugin/` 是宿主面与工具注册），构建产物在 `lib/`（gitignore，npm 包内才有），合成样例在 `samples/quickstart/`，验收记录在 `evidence/`，配图在 `docs/assets/`。开头的 hero 与结构图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow 出 1440×576 深浅双语 hero，手写 SVG 出 1100×660 结构图；五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `pim`, `gtin`, `perrylink`, `catalog`, `lint`
 
