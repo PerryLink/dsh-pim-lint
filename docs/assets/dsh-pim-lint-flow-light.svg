@@ -10,22 +10,22 @@
 <path d="M246 198h33" stroke="#57606a" stroke-width="3"/>
 <path d="M277 191l10 7-10 7" fill="none" stroke="#57606a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="285" y="150" width="180" height="96" rx="14" fill="#f6f8fa" stroke="#4B67B4" stroke-width="2"/>
-<text x="375" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">pim.validate</text>
+<text x="375" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">pim_validate</text>
 <text x="375" y="218" fill="#57606a" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">required / dup / price</text>
 <path d="M471 198h33" stroke="#57606a" stroke-width="3"/>
 <path d="M502 191l10 7-10 7" fill="none" stroke="#57606a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="510" y="150" width="180" height="96" rx="14" fill="#f6f8fa" stroke="#d0d7de" stroke-width="2"/>
-<text x="600" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">pim.gtin_check</text>
+<text x="600" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">pim_gtin_check</text>
 <text x="600" y="218" fill="#57606a" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">GTIN-8/12/13/14</text>
 <path d="M696 198h33" stroke="#57606a" stroke-width="3"/>
 <path d="M727 191l10 7-10 7" fill="none" stroke="#57606a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="735" y="150" width="180" height="96" rx="14" fill="#f6f8fa" stroke="#d0d7de" stroke-width="2"/>
-<text x="825" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">pim.gtin_structure</text>
+<text x="825" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">pim_gtin_structure</text>
 <text x="825" y="218" fill="#57606a" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">indicator / variable</text>
 <path d="M921 198h33" stroke="#57606a" stroke-width="3"/>
 <path d="M952 191l10 7-10 7" fill="none" stroke="#57606a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <rect x="960" y="150" width="180" height="96" rx="14" fill="#f6f8fa" stroke="#16a34a" stroke-width="2"/>
-<text x="1050" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">pim.sscc_check</text>
+<text x="1050" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">pim_sscc_check</text>
 <text x="1050" y="218" fill="#57606a" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">18 digits / mod-10</text>
 <path d="M375 246v39" stroke="#4B67B4" stroke-width="2" stroke-dasharray="5 5"/>
 <path d="M825 246v39" stroke="#4B67B4" stroke-width="2" stroke-dasharray="5 5"/>

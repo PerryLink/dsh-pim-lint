@@ -7,13 +7,13 @@ import { createTools } from '../lib/plugin/tools.js'
 const sha256 = (value) => createHash('sha256').update(value).digest('hex')
 const tools = Object.fromEntries(createTools().map((t) => [t.name, t]))
 const exec = { callId: 'pim-acceptance' }
-const valid = await tools['pim.validate'].execute({ csv_text: 'sku,title,gtin,price\nA,Widget,4006381333931,9.99' }, exec)
-const bad = await tools['pim.validate'].execute({ csv_text: 'sku,title,gtin,price\nA,Widget,4006381333931,9.99\nA,,123,-1' }, exec)
-const gtin = await tools['pim.gtin_check'].execute({ gtin: '4006381333931' }, exec)
-const structure = await tools['pim.gtin_structure'].execute({ gtin: '94006381333934' }, exec)
-const dup = await tools['pim.validate'].execute({ csv_text: 'sku,title,gtin,price\nA,Widget,4006381333931,9.99\nB,Widget 2,4006381333931,12.345' }, exec)
-const sscc = await tools['pim.sscc_check'].execute({ sscc: '340123450000000017' }, exec)
-const ssccBad = await tools['pim.sscc_check'].execute({ sscc: '340123450000000018' }, exec)
+const valid = await tools['pim_validate'].execute({ csv_text: 'sku,title,gtin,price\nA,Widget,4006381333931,9.99' }, exec)
+const bad = await tools['pim_validate'].execute({ csv_text: 'sku,title,gtin,price\nA,Widget,4006381333931,9.99\nA,,123,-1' }, exec)
+const gtin = await tools['pim_gtin_check'].execute({ gtin: '4006381333931' }, exec)
+const structure = await tools['pim_gtin_structure'].execute({ gtin: '94006381333934' }, exec)
+const dup = await tools['pim_validate'].execute({ csv_text: 'sku,title,gtin,price\nA,Widget,4006381333931,9.99\nB,Widget 2,4006381333931,12.345' }, exec)
+const sscc = await tools['pim_sscc_check'].execute({ sscc: '340123450000000017' }, exec)
+const ssccBad = await tools['pim_sscc_check'].execute({ sscc: '340123450000000018' }, exec)
 const metrics = [
   { i: 'PIM-A01', m: 'valid catalog accepted', t: '1/1', a: valid.rows === 1 && valid.issues.length === 0 ? 1 : 0, p: valid.rows === 1 && valid.issues.length === 0 },
   { i: 'PIM-A02', m: 'duplicate/bad GTIN/price issues', t: '3', a: bad.issues.length, p: bad.issues.length >= 3 },

@@ -1,6 +1,6 @@
 {
   "name": "dsh-pim-lint",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "PIM catalog lint: required fields, duplicate SKU, GTIN check digit and price.",
   "type": "module",
   "main": "./lib/plugin/index.js",

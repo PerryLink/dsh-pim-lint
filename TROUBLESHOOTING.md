@@ -25,7 +25,7 @@
 
 - **症状**：问题清单里出现 `E_PIM_GTIN_INVALID`，或 SSCC 结果里出现 `E_PIM_SSCC_CHECKSUM`。
 - **原因**：条码抄错一位、用了内部码，或 SSCC 由系统生成时少一位。
-- **动作**：用 `pim.gtin_structure` 复核位数和指示位（GTIN-14 首位 9 表示变量度量商品）；SSCC 固定 18 位、末位是 mod-10 校验位。
+- **动作**：用 `pim_gtin_structure` 复核位数和指示位（GTIN-14 首位 9 表示变量度量商品）；SSCC 固定 18 位、末位是 mod-10 校验位。
 
 ## 还不行
 

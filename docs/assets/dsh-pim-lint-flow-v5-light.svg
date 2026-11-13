@@ -22,10 +22,10 @@
 <text x="44" y="54" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="28" font-weight="700">dsh-pim-lint</text>
 <text x="44" y="84" fill="#4d5261" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="15">整表逐行扫描 ↔ 单码探针：两条通道，同一套 GS1 算术；结果只在内存。</text>
 <rect x="844" y="34" width="212" height="28" rx="14" fill="#ece7f9" />
-<text x="950" y="53" fill="#4B67B4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="12" font-weight="700" text-anchor="middle">v0.1.1 · R0 · 本地</text>
+<text x="950" y="53" fill="#4B67B4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="12" font-weight="700" text-anchor="middle">v0.2.0 · R0 · 本地</text>
 <line x1="44" y1="104" x2="1056" y2="104" stroke="#e7e4f0" stroke-width="1.4"/>
 <g filter="url(#soft)"><rect x="44" y="116" width="700" height="384" rx="20" fill="#ffffff" stroke="#e4e1ee" stroke-width="1.5" /></g>
-<text x="64" y="143" fill="#4B67B4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">通道 A · 整表 pim.validate</text>
+<text x="64" y="143" fill="#4B67B4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">通道 A · 整表 pim_validate</text>
 <text x="724" y="143" fill="#8f94a4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="end">rows 12 · issues 8</text>
 <rect x="64" y="158" width="208" height="104" rx="14" fill="#f7f4fc" stroke="#e5e0f1" stroke-width="1.4" />
 <path d="M80 178h11l5 5v15h-16z" fill="none" stroke="#4B67B4" stroke-width="1.6" stroke-linejoin="round"/>
@@ -125,7 +125,7 @@
 <text x="786" y="268" fill="#4B67B4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">GTIN-14 · indicator 9</text>
 <text x="786" y="286" fill="#4B67B4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">variable_measure = true</text>
 <line x1="776" y1="322" x2="1036" y2="322" stroke="#e7e4f0" stroke-width="1"/>
-<text x="776" y="346" fill="#4d5261" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">pim.sscc_check</text>
+<text x="776" y="346" fill="#4d5261" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">pim_sscc_check</text>
 <text x="776" y="372" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">340123450000000018</text>
 <text x="1036" y="372" fill="#b42318" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11" text-anchor="end">× 校验位</text>
 <text x="776" y="394" fill="#4d5261" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11">剔除空白 → 18 位数字 → mod-10</text>
@@ -137,14 +137,14 @@
 <text x="66" y="538" fill="#141419" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="12" font-weight="700">返回值 · 进程内，不落盘</text>
 <text x="1034" y="538" fill="#8f94a4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11" text-anchor="end">R0 · 无网络 · 无模型</text>
 <rect x="64" y="550" width="318" height="62" rx="12" fill="#f7f4fc" stroke="#e5e0f1" stroke-width="1.4" />
-<text x="78" y="570" fill="#4B67B4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">pim.validate</text>
+<text x="78" y="570" fill="#4B67B4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">pim_validate</text>
 <text x="78" y="591" fill="#141419" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="12">{ rows, issues[] }</text>
 <text x="370" y="591" fill="#16a34a" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11" text-anchor="end">12 / 8</text>
 <rect x="394" y="550" width="448" height="62" rx="12" fill="#f7f4fc" stroke="#e5e0f1" stroke-width="1.4" />
-<text x="408" y="570" fill="#4B67B4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">pim.gtin_check   → { gtin, valid }</text>
-<text x="408" y="591" fill="#4d5261" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">pim.gtin_structure → { format, indicator?, variable_measure }</text>
+<text x="408" y="570" fill="#4B67B4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11.5">pim_gtin_check   → { gtin, valid }</text>
+<text x="408" y="591" fill="#4d5261" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">pim_gtin_structure → { format, indicator?, variable_measure }</text>
 <rect x="854" y="550" width="188" height="62" rx="12" fill="#f7f4fc" stroke="#e5e0f1" stroke-width="1.4" />
-<text x="868" y="570" fill="#4B67B4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">pim.sscc_check</text>
+<text x="868" y="570" fill="#4B67B4" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="13" font-weight="700">pim_sscc_check</text>
 <text x="868" y="591" fill="#4d5261" font-family="'Consolas','SFMono-Regular','Menlo',ui-monospace,monospace" font-size="11">{ sscc, valid, reason? }</text>
 <text x="44" y="650" fill="#4d5261" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11.5">GTIN-14 首位：0 基础 · 1–8 包装 · 9 变度量 · SSCC 18 位先剔空白 · R0 全程不写文件</text>
 <text x="1056" y="650" fill="#8f94a4" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Segoe UI',sans-serif" font-size="11" text-anchor="end">12 行样例 → 8 条问题</text>
