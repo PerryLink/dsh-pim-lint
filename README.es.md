@@ -35,7 +35,7 @@ dsh plugin --profile <profile> add dsh-pim-lint
 
 ## Qué es
 
-El primer tramo del dato maestro de producto: pasa un CSV de catálogo exportado de un PIM / ERP / Excel por comprobaciones fila a fila — columnas obligatorias, SKU duplicados, GTIN duplicados, dígito de control del GTIN, precisión del precio y precios negativos — y devuelve una lista de problemas con la forma SKU / campo / código de error. `pim.validate` lee la tabla entera; `pim.gtin_check`, `pim.gtin_structure` y `pim.sscc_check` comprueban códigos sueltos y unidades logísticas: el GTIN tiene 8/12/13/14 dígitos, el primer dígito de un GTIN-14 se descifra según las reglas GS1 como indicador de empaque y marca de medida variable, y el SSCC tiene 18 dígitos con un dígito de control mod-10 al final. Las cuatro herramientas son de solo lectura (R0) y calculan en tu máquina; sin red, sin llamada a modelo, sin subidas, y el archivo original nunca se modifica. El proyecto se mantiene activo desde el 2026-11-01, con nuevas funciones, endurecimiento y evidencia continua.
+El primer tramo del dato maestro de producto: pasa un CSV de catálogo exportado de un PIM / ERP / Excel por comprobaciones fila a fila — columnas obligatorias, SKU duplicados, GTIN duplicados, dígito de control del GTIN, precisión del precio y precios negativos — y devuelve una lista de problemas con la forma SKU / campo / código de error. `pim_validate` lee la tabla entera; `pim_gtin_check`, `pim_gtin_structure` y `pim_sscc_check` comprueban códigos sueltos y unidades logísticas: el GTIN tiene 8/12/13/14 dígitos, el primer dígito de un GTIN-14 se descifra según las reglas GS1 como indicador de empaque y marca de medida variable, y el SSCC tiene 18 dígitos con un dígito de control mod-10 al final. Las cuatro herramientas son de solo lectura (R0) y calculan en tu máquina; sin red, sin llamada a modelo, sin subidas, y el archivo original nunca se modifica. El proyecto se mantiene activo desde el 2026-11-01, con nuevas funciones, endurecimiento y evidencia continua.
 
 - **Encaja**: tablas de datos maestros de decenas a miles de filas (CSV UTF-8); una autocomprobación de códigos duplicados, códigos de barras y formatos de precio antes de un lanzamiento o un cambio de precios.
 - **No encaja**: descripciones de producto en texto libre sin SKU ni código de barras; una conexión directa con Tmall / JD / ERP (este paquete no habla con ningún sistema externo); sustituir un registro GS1 o una revisión de canal.
@@ -91,23 +91,23 @@ Todos los plugins de PerryLink aparecen en el mercado integrado de DSH Desktop: 
 
 ## Capacidades principales
 
-- **Validación de toda la tabla** — `pim.validate` lee un CSV entero de una vez: SKU obligatorio y único (sin distinguir mayúsculas), título obligatorio, dígito de control del GTIN y detección de GTIN duplicados, y un precio que debe ser no negativo con dos decimales como máximo; devuelve el número de filas y un arreglo de problemas.
-- **Dígito de control GTIN** — `pim.gtin_check` valida GTIN-8/12/13/14 con el algoritmo mod-10 ponderado 3/1 de GS1; los espacios, las letras o un número de dígitos distinto siempre salen inválidos.
-- **Estructura del GTIN** — `pim.gtin_structure` informa el formato (GTIN-8/12/13/14), el resultado del control, el indicador de empaque de GTIN-14 (1–8 nivel de empaque, 9 medida variable, 0 unidad base) y la marca `variable_measure`.
-- **Comprobación de SSCC** — `pim.sscc_check` valida un código de unidad logística de 18 dígitos: primero elimina los espacios y luego mantiene separados un error de formato (`E_PIM_SSCC_FORMAT`) y un dígito de control incorrecto (`E_PIM_SSCC_CHECKSUM`).
+- **Validación de toda la tabla** — `pim_validate` lee un CSV entero de una vez: SKU obligatorio y único (sin distinguir mayúsculas), título obligatorio, dígito de control del GTIN y detección de GTIN duplicados, y un precio que debe ser no negativo con dos decimales como máximo; devuelve el número de filas y un arreglo de problemas.
+- **Dígito de control GTIN** — `pim_gtin_check` valida GTIN-8/12/13/14 con el algoritmo mod-10 ponderado 3/1 de GS1; los espacios, las letras o un número de dígitos distinto siempre salen inválidos.
+- **Estructura del GTIN** — `pim_gtin_structure` informa el formato (GTIN-8/12/13/14), el resultado del control, el indicador de empaque de GTIN-14 (1–8 nivel de empaque, 9 medida variable, 0 unidad base) y la marca `variable_measure`.
+- **Comprobación de SSCC** — `pim_sscc_check` valida un código de unidad logística de 18 dígitos: primero elimina los espacios y luego mantiene separados un error de formato (`E_PIM_SSCC_FORMAT`) y un dígito de control incorrecto (`E_PIM_SSCC_CHECKSUM`).
 - **Guarda de estructura del CSV** — un archivo solo con cabecera (`E_PIM_CSV_EMPTY`), una columna obligatoria ausente (`E_PIM_HEADER`) y una fila cuyo número de celdas no coincide con la cabecera (`E_PIM_CSV_ROW`) lanzan error, de modo que el analizador nunca adivina dónde está una columna.
 - **Solo lectura, cero escrituras** — las cuatro herramientas son R0: no escriben `$DSH_HOME`, no escriben archivos temporales y no tocan tu CSV; la lista de problemas solo existe en la terminal y en el valor de retorno.
 
 ### Superficie de herramientas
 
-Los nombres de herramienta son la API estable (se mantienen en inglés para coincidir con la salida del runtime); las descripciones están localizadas. Las cuatro herramientas son de solo lectura y no hay herramienta de escritura R1.
+Los nombres de herramienta son la API estable (se mantienen en inglés para coincidir con la salida del runtime); las descripciones están localizadas. Las cuatro herramientas son de solo lectura y no hay herramienta de escritura R1. Todos los nombres coinciden con `^[a-zA-Z0-9_-]+$` (guiones bajos, sin puntos); el provider rechaza un `tools[].name` con punto.
 
 | Herramienta | Propósito | Riesgo |
 |---|---|---|
-| `pim.validate` | Valida filas CSV `sku,title,gtin,price` y devuelve el número de filas y la lista de problemas | R0 |
-| `pim.gtin_check` | Valida el dígito de control GTIN-8/12/13/14 | R0 |
-| `pim.gtin_structure` | Descompone el formato del GTIN, el indicador de empaque y la marca de medida variable | R0 |
-| `pim.sscc_check` | Valida un SSCC de 18 dígitos y su dígito de control mod-10 | R0 |
+| `pim_validate` | Valida filas CSV `sku,title,gtin,price` y devuelve el número de filas y la lista de problemas | R0 |
+| `pim_gtin_check` | Valida el dígito de control GTIN-8/12/13/14 | R0 |
+| `pim_gtin_structure` | Descompone el formato del GTIN, el indicador de empaque y la marca de medida variable | R0 |
+| `pim_sscc_check` | Valida un SSCC de 18 dígitos y su dígito de control mod-10 | R0 |
 
 ### Entrada y salida
 
@@ -116,7 +116,7 @@ Entrada:
 - Formato: CSV UTF-8 (con o sin BOM); la cabecera debe llevar `sku,title,gtin,price` (sin distinguir mayúsculas, se admiten otras columnas); `gtin` puede estar vacío y `price` usa dos decimales.
 - Tamaño: mantén una tabla ≤ 5 MB (unas 20 000 filas); no hay un límite duro interno — más allá, divide por marca o categoría.
 - Origen: exporta desde un PIM / ERP / Excel y guarda como CSV; el archivo original nunca se modifica.
-- Comprobaciones de un solo código: `pim.gtin_check` y `pim.gtin_structure` reciben una cadena GTIN, y `pim.sscc_check` recibe una cadena SSCC.
+- Comprobaciones de un solo código: `pim_gtin_check` y `pim_gtin_structure` reciben una cadena GTIN, y `pim_sscc_check` recibe una cadena SSCC.
 
 Salida:
 
@@ -164,9 +164,9 @@ Este plugin no tiene claves `Config` de Schemastery: `cordis.patch.yml` solo `in
 
 | Parámetro | Valor por defecto | Significado |
 |---|---|---|
-| `csv_text` (`pim.validate`) | ninguno (obligatorio) | Todo el CSV del catálogo como texto; la cabecera debe llevar `sku,title,gtin,price`, se admiten otras columnas y el BOM es opcional |
-| `gtin` (`pim.gtin_check` / `pim.gtin_structure`) | ninguno (obligatorio) | El código de barras a comprobar; solo se aceptan 8/12/13/14 dígitos |
-| `sscc` (`pim.sscc_check`) | ninguno (obligatorio) | Un código de unidad logística de 18 dígitos; primero se eliminan los espacios y luego se juzgan por separado el formato y el dígito de control |
+| `csv_text` (`pim_validate`) | ninguno (obligatorio) | Todo el CSV del catálogo como texto; la cabecera debe llevar `sku,title,gtin,price`, se admiten otras columnas y el BOM es opcional |
+| `gtin` (`pim_gtin_check` / `pim_gtin_structure`) | ninguno (obligatorio) | El código de barras a comprobar; solo se aceptan 8/12/13/14 dígitos |
+| `sscc` (`pim_sscc_check`) | ninguno (obligatorio) | Un código de unidad logística de 18 dígitos; primero se eliminan los espacios y luego se juzgan por separado el formato y el dígito de control |
 
 <details>
 <summary>Tabla completa de códigos de error (12)</summary>
@@ -202,7 +202,7 @@ Comprueba que DSH sea `>=0.2.1-rc.3 <0.4.0` y Node `>=24.9 <25` (ver «Compatibi
 <details>
 <summary>Un código de barras da E_PIM_GTIN_INVALID, ¿están mal los datos o la herramienta?</summary>
 
-Ejecuta primero `node samples/quickstart/run.mjs --check`: si pasa, la cadena está bien y el problema está en los datos. Luego revisa si la cabecera es exactamente `sku,title,gtin,price` y si el archivo es UTF-8. Un GTIN solo tiene 8/12/13/14 dígitos; los espacios o las letras cuentan como inválidos. Usa `pim.gtin_structure` para revisar el número de dígitos, el formato y el primer dígito del GTIN-14: eso separa «longitud incorrecta» de «dígito de control incorrecto».
+Ejecuta primero `node samples/quickstart/run.mjs --check`: si pasa, la cadena está bien y el problema está en los datos. Luego revisa si la cabecera es exactamente `sku,title,gtin,price` y si el archivo es UTF-8. Un GTIN solo tiene 8/12/13/14 dígitos; los espacios o las letras cuentan como inválidos. Usa `pim_gtin_structure` para revisar el número de dígitos, el formato y el primer dígito del GTIN-14: eso separa «longitud incorrecta» de «dígito de control incorrecto».
 
 </details>
 
@@ -229,10 +229,10 @@ No. Herramientas, muestras y aceptación se ejecutan en local; el código fuente
 
 ## Límites de seguridad
 
-- **Solo lectura (R0).** Ninguna de las cuatro herramientas escribe un archivo: ni `$DSH_HOME`, ni archivos temporales, ni cambios en el CSV de entrada; `pim.validate` informa su lista de problemas solo en el valor de retorno.
+- **Solo lectura (R0).** Ninguna de las cuatro herramientas escribe un archivo: ni `$DSH_HOME`, ni archivos temporales, ni cambios en el CSV de entrada; `pim_validate` informa su lista de problemas solo en el valor de retorno.
 - **Sin red y sin llamada a modelo.** Salvo que una herramienta lo diga explícitamente, no hay llamada a modelo ni a red; la entrada y la salida se quedan en local.
 - **Los archivos originales no se modifican.** La sesión lee el CSV y lo pasa como parámetro de texto; las herramientas analizan solo esa copia.
-- **No acapara espacios de nombres.** Solo registra cuatro herramientas `pim.*`: sin claves de servicio, sin comandos ni slots de cliente, sin rutas `webServer` y sin sobrescribir objetos globales.
+- **No acapara espacios de nombres.** Solo registra cuatro herramientas `pim_*`: sin claves de servicio, sin comandos ni slots de cliente, sin rutas `webServer` y sin sobrescribir objetos globales.
 - **Fallos ruidosos, sin adivinar.** Un archivo solo con cabecera, una columna obligatoria ausente o una fila con celdas de más lanzan error en vez de omitir en silencio o adivinar posiciones; la forma uniforme es «una frase llana (`E_XXX`) | siguiente paso: <acción>».
 - **Sin aval de cumplimiento.** Un dígito de control válido y una estructura correcta no hacen vendible un producto: este paquete no consulta el registro GS1, no se conecta a revisiones de canal y no juzga la titularidad del producto ni su clase fiscal.
 
@@ -289,13 +289,13 @@ Cada verificador es un paquete aparte con su propio paquete de reglas y versión
 
 ```sh
 pnpm install --frozen-lockfile                              # node >=24.9 <25
-pnpm build && pnpm lint && pnpm typecheck && pnpm test      # build tsc + lint + typecheck + 10 casos node --test
+pnpm build && pnpm lint && pnpm typecheck && pnpm test      # build tsc + lint + typecheck + 11 casos node --test
 pnpm gate                                                   # node scripts/gate.mjs: repite la aceptación y verifica ACCEPTANCE.csv
 node scripts/acceptance.mjs                                 # repetir la aceptación pública/sintética, escribe evidence/ y ACCEPTANCE.csv
 node samples/quickstart/run.mjs --check                     # muestra contra el archivo dorado; debe imprimir quickstart ok
 ```
 
-Versión actual `0.1.1` (coincide con `package.json`). Pruebas: `node --test test/*.test.mjs` en verde con 10 casos en 4 archivos (`pim.test.mjs` 5, `sscc.test.mjs` 3, `plugin-smoke.test.mjs` 1, `quickstart.test.mjs` 1; `pnpm test` ya incluye el build). Estructura: el código TypeScript está en `src/` (`src/core/pim.ts` contiene el análisis de CSV y las comprobaciones GTIN y SSCC; `src/plugin/` es la cara host y el registro de herramientas), la salida de compilación en `lib/` (en gitignore; solo el paquete npm la lleva), la muestra sintética en `samples/quickstart/`, los registros de aceptación en `evidence/` y las imágenes en `docs/assets/`. El hero y el diagrama de estructura los genera [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow genera los heroes de 1440×576 zh/en en claro/oscuro; un SVG escrito a mano genera el diagrama de estructura de 1100×660; compartido por los cinco idiomas) y se puede repetir con `python scripts/gen-readme-assets.py`.
+Versión actual `0.2.0` (coincide con `package.json`). Pruebas: `node --test test/*.test.mjs` en verde con 11 casos en 5 archivos (`pim.test.mjs` 5, `sscc.test.mjs` 3, `plugin-smoke.test.mjs` 1, `quickstart.test.mjs` 1, `tool-name-wire.test.mjs` 1; `pnpm test` ya incluye el build). Estructura: el código TypeScript está en `src/` (`src/core/pim.ts` contiene el análisis de CSV y las comprobaciones GTIN y SSCC; `src/plugin/` es la cara host y el registro de herramientas), la salida de compilación en `lib/` (en gitignore; solo el paquete npm la lleva), la muestra sintética en `samples/quickstart/`, los registros de aceptación en `evidence/` y las imágenes en `docs/assets/`. El hero y el diagrama de estructura los genera [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow genera los heroes de 1440×576 zh/en en claro/oscuro; un SVG escrito a mano genera el diagrama de estructura de 1100×660; compartido por los cinco idiomas) y se puede repetir con `python scripts/gen-readme-assets.py`.
 
 Temas: `deepseek-harness`, `dsh`, `dsh-plugin`, `pim`, `gtin`, `perrylink`, `catalog`, `lint`
 

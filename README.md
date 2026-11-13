@@ -35,7 +35,7 @@ dsh plugin --profile <profile> add dsh-pim-lint
 
 ## 它是什么
 
-商品主数据的第一公里：把从 PIM / ERP / Excel 导出的商品目录 CSV 逐行查一遍——必填列、重复 SKU、重复 GTIN、GTIN 校验位、价格精度与负数价格，输出「SKU / 字段 / 错误码」的问题清单。`pim.validate` 读整张表；`pim.gtin_check`、`pim.gtin_structure` 与 `pim.sscc_check` 单独核条码和物流单元码：GTIN 认 8/12/13/14 位，GTIN-14 首位按 GS1 规则解出包装指示位与变度量标志，SSCC 固定 18 位、末位是 mod-10 校验位。四个工具全部只读（R0），在本机算完直接返回；不联网、不调用模型、不上传，原文件不会被修改。项目自 2026-11-01 起活跃维护，新功能、加固与证据持续更新。
+商品主数据的第一公里：把从 PIM / ERP / Excel 导出的商品目录 CSV 逐行查一遍——必填列、重复 SKU、重复 GTIN、GTIN 校验位、价格精度与负数价格，输出「SKU / 字段 / 错误码」的问题清单。`pim_validate` 读整张表；`pim_gtin_check`、`pim_gtin_structure` 与 `pim_sscc_check` 单独核条码和物流单元码：GTIN 认 8/12/13/14 位，GTIN-14 首位按 GS1 规则解出包装指示位与变度量标志，SSCC 固定 18 位、末位是 mod-10 校验位。四个工具全部只读（R0），在本机算完直接返回；不联网、不调用模型、不上传，原文件不会被修改。项目自 2026-11-01 起活跃维护，新功能、加固与证据持续更新。
 
 - **适合**：几十到几千行的商品主数据表（UTF-8 CSV）；上新或调价前先自查重复编码、条码和价格格式。
 - **不适合**：没有 SKU 或条码的自由文本商品描述；直连天猫 / 京东 / ERP（本包不连外部系统）；替代 GS1 官方注册或渠道审核。
@@ -91,23 +91,23 @@ dsh plugin --profile <profile> add dsh-pim-lint
 
 ## 核心能力
 
-- **整表校验** —— `pim.validate` 一次读完整张 CSV：SKU 必填与重复（大小写不敏感）、title 必填、GTIN 校验位与重复、价格必须非负且最多两位小数，返回行数与问题数组。
-- **GTIN 校验位** —— `pim.gtin_check` 按 GS1 的 3/1 加权 mod-10 算法校 GTIN-8/12/13/14；带空格、字母或位数不对一律判为不合法。
-- **GTIN 结构解析** —— `pim.gtin_structure` 给出格式（GTIN-8/12/13/14）、校验结果、GTIN-14 的包装指示位（1–8 为包装层级、9 为变度量、0 为基础单元）与 `variable_measure` 标志。
-- **SSCC 校验** —— `pim.sscc_check` 校 18 位物流单元码：先剔除空白字符，再把格式错误（`E_PIM_SSCC_FORMAT`）与校验位错误（`E_PIM_SSCC_CHECKSUM`）分成两个码。
+- **整表校验** —— `pim_validate` 一次读完整张 CSV：SKU 必填与重复（大小写不敏感）、title 必填、GTIN 校验位与重复、价格必须非负且最多两位小数，返回行数与问题数组。
+- **GTIN 校验位** —— `pim_gtin_check` 按 GS1 的 3/1 加权 mod-10 算法校 GTIN-8/12/13/14；带空格、字母或位数不对一律判为不合法。
+- **GTIN 结构解析** —— `pim_gtin_structure` 给出格式（GTIN-8/12/13/14）、校验结果、GTIN-14 的包装指示位（1–8 为包装层级、9 为变度量、0 为基础单元）与 `variable_measure` 标志。
+- **SSCC 校验** —— `pim_sscc_check` 校 18 位物流单元码：先剔除空白字符，再把格式错误（`E_PIM_SSCC_FORMAT`）与校验位错误（`E_PIM_SSCC_CHECKSUM`）分成两个码。
 - **CSV 结构守卫** —— 只有表头（`E_PIM_CSV_EMPTY`）、缺必填列（`E_PIM_HEADER`）、某行列数与表头不符（`E_PIM_CSV_ROW`）都直接抛错，绝不去猜列的位置。
 - **只读、零写入** —— 四个工具全部 R0：不写 `$DSH_HOME`、不写临时文件、不改你的 CSV；问题清单只在终端与返回值里。
 
 ### 工具面
 
-工具名是稳定 API（与运行时输出一致，保持英文）；说明已本地化。四个工具全部只读，没有 R1 写工具。
+工具名是稳定 API（与运行时输出一致，保持英文）；说明已本地化。四个工具全部只读，没有 R1 写工具。所有工具名都匹配 `^[a-zA-Z0-9_-]+$`（下划线，不含点号）——provider 会拒绝带点号的 `tools[].name`。
 
 | 工具 | 用途 | 风险 |
 |---|---|---|
-| `pim.validate` | 校验 `sku,title,gtin,price` CSV 行，返回行数与问题清单 | R0 |
-| `pim.gtin_check` | 校验 GTIN-8/12/13/14 校验位 | R0 |
-| `pim.gtin_structure` | 拆解 GTIN 格式、包装指示位与变度量标志 | R0 |
-| `pim.sscc_check` | 校验 18 位 SSCC 与 mod-10 校验位 | R0 |
+| `pim_validate` | 校验 `sku,title,gtin,price` CSV 行，返回行数与问题清单 | R0 |
+| `pim_gtin_check` | 校验 GTIN-8/12/13/14 校验位 | R0 |
+| `pim_gtin_structure` | 拆解 GTIN 格式、包装指示位与变度量标志 | R0 |
+| `pim_sscc_check` | 校验 18 位 SSCC 与 mod-10 校验位 | R0 |
 
 ### 输入与输出
 
@@ -116,7 +116,7 @@ dsh plugin --profile <profile> add dsh-pim-lint
 - 格式：UTF-8 CSV（带不带 BOM 都行），表头必须含 `sku,title,gtin,price` 四列（大小写不限，允许其他列）；`gtin` 可空，`price` 用两位小数。
 - 大小：单表建议 ≤ 5 MB（约 2 万行），没有内置硬上限；更大请先按品牌或类目拆表。
 - 来源：从 PIM / ERP / Excel 导出后另存为 CSV；原文件不会被修改。
-- 单码核查：`pim.gtin_check` 与 `pim.gtin_structure` 各收一个 GTIN 字符串，`pim.sscc_check` 收一个 SSCC 字符串。
+- 单码核查：`pim_gtin_check` 与 `pim_gtin_structure` 各收一个 GTIN 字符串，`pim_sscc_check` 收一个 SSCC 字符串。
 
 输出：
 
@@ -164,9 +164,9 @@ PS1-QS01,quickstart 样例与金标一致,1/1,1,scripts/acceptance.mjs,8ec26f4f0
 
 | 参数 | 默认值 | 含义 |
 |---|---|---|
-| `csv_text`（`pim.validate`） | 无（必填） | 整张商品目录 CSV 的文本；表头须含 `sku,title,gtin,price`，允许其他列，BOM 可有可无 |
-| `gtin`（`pim.gtin_check` / `pim.gtin_structure`） | 无（必填） | 待校条码；只接受 8/12/13/14 位纯数字 |
-| `sscc`（`pim.sscc_check`） | 无（必填） | 18 位物流单元码；空白字符先剔除，再分别判格式与校验位 |
+| `csv_text`（`pim_validate`） | 无（必填） | 整张商品目录 CSV 的文本；表头须含 `sku,title,gtin,price`，允许其他列，BOM 可有可无 |
+| `gtin`（`pim_gtin_check` / `pim_gtin_structure`） | 无（必填） | 待校条码；只接受 8/12/13/14 位纯数字 |
+| `sscc`（`pim_sscc_check`） | 无（必填） | 18 位物流单元码；空白字符先剔除，再分别判格式与校验位 |
 
 <details>
 <summary>完整错误码表（12 个）</summary>
@@ -202,7 +202,7 @@ PS1-QS01,quickstart 样例与金标一致,1/1,1,scripts/acceptance.mjs,8ec26f4f0
 <details>
 <summary>条码报 E_PIM_GTIN_INVALID，是数据错了还是工具错了？</summary>
 
-先跑 `node samples/quickstart/run.mjs --check`：它能通过就说明链路正常，问题在数据侧。再检查表头是否为 `sku,title,gtin,price`、文件是否 UTF-8。GTIN 只认 8/12/13/14 位纯数字，带空格或字母一律算不合法；用 `pim.gtin_structure` 复核位数、格式与 GTIN-14 首位，能区分「位数不对」和「校验位不对」。
+先跑 `node samples/quickstart/run.mjs --check`：它能通过就说明链路正常，问题在数据侧。再检查表头是否为 `sku,title,gtin,price`、文件是否 UTF-8。GTIN 只认 8/12/13/14 位纯数字，带空格或字母一律算不合法；用 `pim_gtin_structure` 复核位数、格式与 GTIN-14 首位，能区分「位数不对」和「校验位不对」。
 
 </details>
 
@@ -229,10 +229,10 @@ PS1-QS01,quickstart 样例与金标一致,1/1,1,scripts/acceptance.mjs,8ec26f4f0
 
 ## 安全边界
 
-- **只读（R0）。** 四个工具都不写文件：不碰 `$DSH_HOME`、不写临时文件、不改输入 CSV；`pim.validate` 的问题清单只在返回值里。
+- **只读（R0）。** 四个工具都不写文件：不碰 `$DSH_HOME`、不写临时文件、不改输入 CSV；`pim_validate` 的问题清单只在返回值里。
 - **不联网、不调用模型。** 除非工具明确说明，否则没有模型或网络调用；输入和输出都留在本地。
 - **原文件不被修改。** CSV 由会话读入后以文本参数传入，工具只解析这份副本。
-- **不抢命名空间。** 只注册四个 `pim.*` 工具：不提供服务键、不注册命令或客户端 slot、不注册 `webServer` 路由，也不改全局对象。
+- **不抢命名空间。** 只注册四个 `pim_*` 工具：不提供服务键、不注册命令或客户端 slot、不注册 `webServer` 路由，也不改全局对象。
 - **失败响亮，不猜数据。** CSV 只有表头、缺必填列、某行列数不符都直接抛错，不会静默跳过或按位置猜列；统一格式为「一句人话（`E_XXX`）｜下一步：<动作>」。
 - **不做合规背书。** 校验位与结构通过不等于商品可上架：本包不查 GS1 注册库、不接渠道审核、不判断商品归属与税类。
 
@@ -289,13 +289,13 @@ PS1-QS01,quickstart 样例与金标一致,1/1,1,scripts/acceptance.mjs,8ec26f4f0
 
 ```sh
 pnpm install --frozen-lockfile                              # node >=24.9 <25
-pnpm build && pnpm lint && pnpm typecheck && pnpm test      # tsc 构建 + lint + typecheck + 10 个 node --test 用例
+pnpm build && pnpm lint && pnpm typecheck && pnpm test      # tsc 构建 + lint + typecheck + 11 个 node --test 用例
 pnpm gate                                                   # node scripts/gate.mjs：重跑验收并校验 ACCEPTANCE.csv
 node scripts/acceptance.mjs                                 # 单独重跑公开/合成验收，写入 evidence/ 与 ACCEPTANCE.csv
 node samples/quickstart/run.mjs --check                     # 合成样例对照金标，应输出 quickstart ok
 ```
 
-当前版本 `0.1.1`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs` 共 10 个用例、4 个文件全绿（`pim.test.mjs` 5 个、`sscc.test.mjs` 3 个、`plugin-smoke.test.mjs` 1 个、`quickstart.test.mjs` 1 个；`pnpm test` 已内置构建）。目录布局：TypeScript 源码在 `src/`（`src/core/pim.ts` 是 CSV 解析、GTIN 与 SSCC 校验；`src/plugin/` 是宿主面与工具注册），构建产物在 `lib/`（gitignore，npm 包内才有），合成样例在 `samples/quickstart/`，验收记录在 `evidence/`，配图在 `docs/assets/`。开头的 hero 与结构图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow 出 1440×576 深浅双语 hero，手写 SVG 出 1100×660 结构图；五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
+当前版本 `0.2.0`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs` 共 11 个用例、5 个文件全绿（`pim.test.mjs` 5 个、`sscc.test.mjs` 3 个、`plugin-smoke.test.mjs` 1 个、`quickstart.test.mjs` 1 个、`tool-name-wire.test.mjs` 1 个；`pnpm test` 已内置构建）。目录布局：TypeScript 源码在 `src/`（`src/core/pim.ts` 是 CSV 解析、GTIN 与 SSCC 校验；`src/plugin/` 是宿主面与工具注册），构建产物在 `lib/`（gitignore，npm 包内才有），合成样例在 `samples/quickstart/`，验收记录在 `evidence/`，配图在 `docs/assets/`。开头的 hero 与结构图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow 出 1440×576 深浅双语 hero，手写 SVG 出 1100×660 结构图；五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `pim`, `gtin`, `perrylink`, `catalog`, `lint`
 

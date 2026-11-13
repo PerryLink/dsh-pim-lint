@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.2.0] — 2026-11-13
+
+### Breaking
+
+- **Tool names now use underscores instead of dots.** The separator in every
+  name changed from `.` to `_`: `pim` + `.` + `validate` → `pim_validate`,
+  and likewise for `gtin_check`, `gtin_structure`, and `sscc_check`
+  (`pim_gtin_check`, `pim_gtin_structure`, `pim_sscc_check`). The provider
+  validates every `tools[].name` against `^[a-zA-Z0-9_-]+$`; a dotted name makes
+  it reject the whole `tools` array (`Invalid 'tools[N].name'`), so the plugin
+  registered but no request carrying the tools could succeed. Dotted aliases
+  cannot be put on the wire, so no compatibility alias is kept: callers must
+  migrate to the underscore names. This is the minor bump that the 0.1.x
+  compatibility promise requires for a breaking change.
+- Added `test/tool-name-wire.test.mjs`: every registered tool name must match
+  `^[a-zA-Z0-9_-]+$`, contain no dot, stay in the `pim_` namespace and be unique.
+- README (five languages), `TROUBLESHOOTING.md`, the flow diagrams, the
+  quickstart runner, the acceptance script and the tool names in source and
+  tests were updated with the rename.
+
 ## [0.1.0] — 2026-11-03
 
 ### Stable
@@ -17,14 +37,14 @@
 
 ### Added
 
-- `pim.sscc_check`: SSCC validation (18 digits, GS1 mod-10 check digit) with distinct format and checksum codes. Verified by `node --test test/*.test.mjs` (8/8).
+- SSCC check tool: SSCC validation (18 digits, GS1 mod-10 check digit) with distinct format and checksum codes. Verified by `node --test test/*.test.mjs` (8/8).
 
 ## [Unreleased]
 
 ### Added
 
-- `pim.gtin_structure`: GTIN-8/12/13/14 decomposition with the GTIN-14 packaging indicator and variable-measure flag (GS1 General Specifications).
-- `pim.validate` now reports duplicate GTINs (`E_PIM_GTIN_DUPLICATE`) and over-precise prices (`E_PIM_PRICE_PRECISION`).
+- GTIN structure tool: GTIN-8/12/13/14 decomposition with the GTIN-14 packaging indicator and variable-measure flag (GS1 General Specifications).
+- Whole-table validation now reports duplicate GTINs (`E_PIM_GTIN_DUPLICATE`) and over-precise prices (`E_PIM_PRICE_PRECISION`).
 - Verified by `node --test test/pim.test.mjs` (5/5); fixtures are our own public/synthetic rows.
 
 ## [0.1.0-alpha.7] — 2026-11-01

@@ -17,11 +17,11 @@ Design notes
   (3/1 weights, check digit 4, indicator 9, variable_measure true). All
   numbers and codes come from samples/quickstart/expected/result.json.
 * Flow: a two-channel structure, NOT a row of nodes. Channel A is whole-table
-  `pim.validate`: catalog.csv -> CSV guard (three throw-only codes) -> 12 rows
+  `pim_validate`: catalog.csv -> CSV guard (three throw-only codes) -> 12 rows
   -> a 4-field x 7-rule inspection matrix -> `issues[]` keyed by
   SKU/field/code. Channel B is the single-code bench: a 14-digit GTIN through
-  `pim.gtin_check`/`pim.gtin_structure` (format, indicator, variable_measure)
-  and an 18-digit SSCC through `pim.sscc_check` (format vs mod-10 reason).
+  `pim_gtin_check`/`pim_gtin_structure` (format, indicator, variable_measure)
+  and an 18-digit SSCC through `pim_sscc_check` (format vs mod-10 reason).
   The bottom band gives the three real return shapes. Text is tokens, field
   names and short labels only, so all five README languages share one pair.
   The matrix counts are the fixture's: 8 issues, 6 codes, sku x1 / title x1 /
@@ -529,14 +529,14 @@ def flow_svg(skin_name):
     p.append(T(44, 84, "整表逐行扫描 ↔ 单码探针：两条通道，同一套 GS1 算术；"
                        "结果只在内存。", 15, s["sub"], family=SANS))
     p.append(R(844, 34, 212, 28, s["accent_soft"], rx=14))
-    p.append(T(950, 53, "v0.1.1 · R0 · 本地", 12, s["accent"],
+    p.append(T(950, 53, "v0.2.0 · R0 · 本地", 12, s["accent"],
                family=SANS, anchor="middle", weight="700"))
     p.append(f'<line x1="44" y1="104" x2="1056" y2="104" stroke="{s["grid"]}" '
              f'stroke-width="1.4"/>')
 
     # ------------------------------------------------------- left card A
     p.append(f'<g filter="url(#soft)">{R(44, 116, 700, 384, s["card"], s["edge"], rx=20, sw=1.5)}</g>')
-    p.append(T(64, 143, "通道 A · 整表 pim.validate", 13, s["accent"],
+    p.append(T(64, 143, "通道 A · 整表 pim_validate", 13, s["accent"],
                weight="700"))
     p.append(T(724, 143, "rows 12 · issues 8", 11, s["faint"], anchor="end"))
 
@@ -641,7 +641,7 @@ def flow_svg(skin_name):
     p.append(f'<line x1="776" y1="322" x2="1036" y2="322" stroke="{s["grid"]}" stroke-width="1"/>')
 
     # SSCC bench
-    p.append(T(776, 346, "pim.sscc_check", 11, s["sub"]))
+    p.append(T(776, 346, "pim_sscc_check", 11, s["sub"]))
     p.append(T(776, 372, "340123450000000018", 13, s["text"], weight="700"))
     p.append(T(1036, 372, "× 校验位", 11, s["bad"], family=SANS, anchor="end"))
     p.append(T(776, 394, "剔除空白 → 18 位数字 → mod-10", 11, s["sub"],
@@ -662,18 +662,18 @@ def flow_svg(skin_name):
 
     # A
     p.append(R(64, 550, 318, 62, s["zone"], s["zone_edge"], rx=12))
-    p.append(T(78, 570, "pim.validate", 13, s["accent"], weight="700"))
+    p.append(T(78, 570, "pim_validate", 13, s["accent"], weight="700"))
     p.append(T(78, 591, "{ rows, issues[] }", 12, s["text"]))
     p.append(T(370, 591, "12 / 8", 11, s["good"], anchor="end"))
     # B
     p.append(R(394, 550, 448, 62, s["zone"], s["zone_edge"], rx=12))
-    p.append(T(408, 570, "pim.gtin_check   → { gtin, valid }", 11.5,
+    p.append(T(408, 570, "pim_gtin_check   → { gtin, valid }", 11.5,
                s["accent"]))
-    p.append(T(408, 591, "pim.gtin_structure → { format, indicator?, "
+    p.append(T(408, 591, "pim_gtin_structure → { format, indicator?, "
                         "variable_measure }", 11, s["sub"]))
     # C
     p.append(R(854, 550, 188, 62, s["zone"], s["zone_edge"], rx=12))
-    p.append(T(868, 570, "pim.sscc_check", 13, s["accent"], weight="700"))
+    p.append(T(868, 570, "pim_sscc_check", 13, s["accent"], weight="700"))
     p.append(T(868, 591, "{ sscc, valid, reason? }", 11, s["sub"]))
 
     # ------------------------------------------------------------- footer

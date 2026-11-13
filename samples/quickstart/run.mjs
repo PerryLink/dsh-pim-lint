@@ -35,7 +35,7 @@ async function run() {
   const tools = Object.fromEntries(createTools().map((tool) => [tool.name, tool]))
   const call = { callId: 'quickstart' }
 
-  const validated = await tools['pim.validate'].execute({ csv_text: catalogText }, call)
+  const validated = await tools['pim_validate'].execute({ csv_text: catalogText }, call)
 
   const counts = new Map()
   for (const issue of validated.issues) counts.set(issue.code, (counts.get(issue.code) ?? 0) + 1)
@@ -43,8 +43,8 @@ async function run() {
 
   const checks = []
   for (const row of codeRows) {
-    const structure = await tools['pim.gtin_structure'].execute({ gtin: row.gtin }, call)
-    const sscc = await tools['pim.sscc_check'].execute({ sscc: row.sscc }, call)
+    const structure = await tools['pim_gtin_structure'].execute({ gtin: row.gtin }, call)
+    const sscc = await tools['pim_sscc_check'].execute({ sscc: row.sscc }, call)
     checks.push({
       gtin: structure.gtin,
       format: structure.format,
