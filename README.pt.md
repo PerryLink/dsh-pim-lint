@@ -142,6 +142,11 @@ node samples/quickstart/run.mjs --check
 
 *12 linhas de catálogo sintético → 8 problemas (3 GTIN duplicados, 1 dígito verificador errado, 1 SKU duplicado, 1 título ausente, 1 preço negativo, 1 precisão de preço), mais um GTIN-14 de medida variável e um SSCC errado; o arquivo dourado é `samples/quickstart/expected/result.json`, comando e hashes em `screenshots.json`.*
 
+![Saída real do quickstart do dsh-pim-lint](docs/assets/dsh-pim-lint-demo.gif)
+
+*A versão animada da mesma execução.*
+
+
 Aceitação com fixture público/sintético: rode de novo `node scripts/acceptance.mjs`; o detalhe é escrito em `ACCEPTANCE.csv` (citado na íntegra):
 
 ```csv

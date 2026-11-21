@@ -142,6 +142,11 @@ node samples/quickstart/run.mjs --check
 
 *12 行合成目录 → 8 条问题（3 条重复 GTIN、1 条坏校验位、1 条重复 SKU、1 条缺标题、1 条负价、1 条价格精度），再核一个 GTIN-14 变度量码与一个坏 SSCC；金标为 `samples/quickstart/expected/result.json`，命令与哈希见 `screenshots.json`。*
 
+![dsh-pim-lint quickstart 真实运行输出](docs/assets/dsh-pim-lint-demo.gif)
+
+*同一段真实运行的动图版本。*
+
+
 公开/合成 fixture 验收：重跑 `node scripts/acceptance.mjs`，明细写入 `ACCEPTANCE.csv`（逐字引用）：
 
 ```csv

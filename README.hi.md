@@ -142,6 +142,11 @@ node samples/quickstart/run.mjs --check
 
 *12 सिंथेटिक कैटलॉग पंक्तियाँ → 8 समस्याएँ (3 डुप्लिकेट GTIN, 1 गलत चेक डिजिट, 1 डुप्लिकेट SKU, 1 खाली title, 1 ऋणात्मक कीमत, 1 कीमत प्रिसीज़न), साथ में एक GTIN-14 वेरिएबल-मेज़र कोड और एक गलत SSCC; गोल्डन फ़ाइल `samples/quickstart/expected/result.json` है, कमांड और हैश `screenshots.json` में।*
 
+![dsh-pim-lint quickstart का वास्तविक आउटपुट](docs/assets/dsh-pim-lint-demo.gif)
+
+*उसी असली रन का एनिमेटेड संस्करण।*
+
+
 सार्वजनिक/सिंथेटिक fixture स्वीकृति: `node scripts/acceptance.mjs` फिर चलाएँ; विवरण `ACCEPTANCE.csv` में लिखा जाता है (शब्दशः उद्धृत):
 
 ```csv
