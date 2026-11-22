@@ -41,6 +41,10 @@
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-11-22
+
+- Compatibility: declare DeepSeek Harness 0.2.3-alpha.1 support (>=0.2.3-0 <0.3.0-0 in engines.dsh and every @deepseek-ai/dsh-* peer range) and refresh README verification stamps.
+
 ### Added
 
 - GTIN structure tool: GTIN-8/12/13/14 decomposition with the GTIN-14 packaging indicator and variable-measure flag (GS1 General Specifications).

@@ -529,7 +529,7 @@ def flow_svg(skin_name):
     p.append(T(44, 84, "整表逐行扫描 ↔ 单码探针：两条通道，同一套 GS1 算术；"
                        "结果只在内存。", 15, s["sub"], family=SANS))
     p.append(R(844, 34, 212, 28, s["accent_soft"], rx=14))
-    p.append(T(950, 53, "v0.2.0 · R0 · 本地", 12, s["accent"],
+    p.append(T(950, 53, "v0.2.1 · R0 · 本地", 12, s["accent"],
                family=SANS, anchor="middle", weight="700"))
     p.append(f'<line x1="44" y1="104" x2="1056" y2="104" stroke="{s["grid"]}" '
              f'stroke-width="1.4"/>')

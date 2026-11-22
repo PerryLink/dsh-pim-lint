@@ -11,6 +11,8 @@
 
 DeepSeek Harness के लिए पूरी तरह लोकल PIM कैटलॉग lint: UTF-8 CSV पढ़ता है, GS1 नियमों से बारकोड जाँचता है और हर समस्या को SKU / फ़ील्ड / एरर कोड के रूप में देता है; न नेटवर्क, न मॉडल कॉल, न आपकी फ़ाइलों में बदलाव।
 
+अंतिम सत्यापन: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [इंस्टॉल](#तीन-चरणों-में-शुरुआत) · [कॉन्फ़िगरेशन](#कॉन्फ़िगरेशन) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -145,7 +147,6 @@ node samples/quickstart/run.mjs --check
 ![dsh-pim-lint quickstart का वास्तविक आउटपुट](docs/assets/dsh-pim-lint-demo.gif)
 
 *उसी असली रन का एनिमेटेड संस्करण।*
-
 
 सार्वजनिक/सिंथेटिक fixture स्वीकृति: `node scripts/acceptance.mjs` फिर चलाएँ; विवरण `ACCEPTANCE.csv` में लिखा जाता है (शब्दशः उद्धृत):
 
@@ -300,7 +301,7 @@ node scripts/acceptance.mjs                                 # सार्वज
 node samples/quickstart/run.mjs --check                     # गोल्डन फ़ाइल से सैंपल मिलान; quickstart ok प्रिंट होना चाहिए
 ```
 
-मौजूदा संस्करण `0.2.0` (`package.json` के अनुरूप)। टेस्ट: `node --test test/*.test.mjs` 5 फ़ाइलों में 11 केस के साथ हरा (`pim.test.mjs` 5, `sscc.test.mjs` 3, `plugin-smoke.test.mjs` 1, `quickstart.test.mjs` 1, `tool-name-wire.test.mjs` 1; `pnpm test` में बिल्ड पहले से शामिल है)। संरचना: TypeScript सोर्स `src/` में (`src/core/pim.ts` में CSV पार्सिंग और GTIN व SSCC जाँच; `src/plugin/` होस्ट फ़ेस और टूल रजिस्ट्रेशन), बिल्ड आउटपुट `lib/` में (gitignore; केवल npm पैकेज में जाता है), सिंथेटिक सैंपल `samples/quickstart/` में, स्वीकृति रिकॉर्ड `evidence/` में और चित्र `docs/assets/` में। शुरुआती hero और संरचना डायग्राम [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) से बनते हैं (Pillow 1440×576 के zh/en light/dark hero बनाता है; हाथ से लिखा SVG 1100×660 का संरचना डायग्राम बनाता है; पाँचों भाषाओं में साझा) और `python scripts/gen-readme-assets.py` से दोबारा चलाए जा सकते हैं।
+मौजूदा संस्करण `0.2.1` (`package.json` के अनुरूप)। टेस्ट: `node --test test/*.test.mjs` 5 फ़ाइलों में 11 केस के साथ हरा (`pim.test.mjs` 5, `sscc.test.mjs` 3, `plugin-smoke.test.mjs` 1, `quickstart.test.mjs` 1, `tool-name-wire.test.mjs` 1; `pnpm test` में बिल्ड पहले से शामिल है)। संरचना: TypeScript सोर्स `src/` में (`src/core/pim.ts` में CSV पार्सिंग और GTIN व SSCC जाँच; `src/plugin/` होस्ट फ़ेस और टूल रजिस्ट्रेशन), बिल्ड आउटपुट `lib/` में (gitignore; केवल npm पैकेज में जाता है), सिंथेटिक सैंपल `samples/quickstart/` में, स्वीकृति रिकॉर्ड `evidence/` में और चित्र `docs/assets/` में। शुरुआती hero और संरचना डायग्राम [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) से बनते हैं (Pillow 1440×576 के zh/en light/dark hero बनाता है; हाथ से लिखा SVG 1100×660 का संरचना डायग्राम बनाता है; पाँचों भाषाओं में साझा) और `python scripts/gen-readme-assets.py` से दोबारा चलाए जा सकते हैं।
 
 विषय: `deepseek-harness`, `dsh`, `dsh-plugin`, `pim`, `gtin`, `perrylink`, `catalog`, `lint`
 

@@ -11,6 +11,8 @@
 
 面向 DeepSeek Harness 的纯本地 PIM 目录 lint：读 UTF-8 CSV，按 GS1 规则校条码，把每条问题写成「SKU / 字段 / 错误码」；不联网、不调用模型、不改原文件。
 
+最近一次核验：DeepSeek Harness `dsh-v0.2.3-alpha.1`（2026-11-22）。
+
 [安装](#三步上手) · [配置](#配置) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -145,7 +147,6 @@ node samples/quickstart/run.mjs --check
 ![dsh-pim-lint quickstart 真实运行输出](docs/assets/dsh-pim-lint-demo.gif)
 
 *同一段真实运行的动图版本。*
-
 
 公开/合成 fixture 验收：重跑 `node scripts/acceptance.mjs`，明细写入 `ACCEPTANCE.csv`（逐字引用）：
 
@@ -300,7 +301,7 @@ node scripts/acceptance.mjs                                 # 单独重跑公开
 node samples/quickstart/run.mjs --check                     # 合成样例对照金标，应输出 quickstart ok
 ```
 
-当前版本 `0.2.0`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs` 共 11 个用例、5 个文件全绿（`pim.test.mjs` 5 个、`sscc.test.mjs` 3 个、`plugin-smoke.test.mjs` 1 个、`quickstart.test.mjs` 1 个、`tool-name-wire.test.mjs` 1 个；`pnpm test` 已内置构建）。目录布局：TypeScript 源码在 `src/`（`src/core/pim.ts` 是 CSV 解析、GTIN 与 SSCC 校验；`src/plugin/` 是宿主面与工具注册），构建产物在 `lib/`（gitignore，npm 包内才有），合成样例在 `samples/quickstart/`，验收记录在 `evidence/`，配图在 `docs/assets/`。开头的 hero 与结构图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow 出 1440×576 深浅双语 hero，手写 SVG 出 1100×660 结构图；五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
+当前版本 `0.2.1`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs` 共 11 个用例、5 个文件全绿（`pim.test.mjs` 5 个、`sscc.test.mjs` 3 个、`plugin-smoke.test.mjs` 1 个、`quickstart.test.mjs` 1 个、`tool-name-wire.test.mjs` 1 个；`pnpm test` 已内置构建）。目录布局：TypeScript 源码在 `src/`（`src/core/pim.ts` 是 CSV 解析、GTIN 与 SSCC 校验；`src/plugin/` 是宿主面与工具注册），构建产物在 `lib/`（gitignore，npm 包内才有），合成样例在 `samples/quickstart/`，验收记录在 `evidence/`，配图在 `docs/assets/`。开头的 hero 与结构图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow 出 1440×576 深浅双语 hero，手写 SVG 出 1100×660 结构图；五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `pim`, `gtin`, `perrylink`, `catalog`, `lint`
 

@@ -11,6 +11,8 @@
 
 Um lint de catálogo PIM totalmente local para o DeepSeek Harness: lê um CSV UTF-8, confere códigos de barras pelas regras GS1 e devolve cada problema como SKU / campo / código de erro; sem rede, sem chamada a modelo e sem alterar seus arquivos.
 
+Última verificação: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [Instalação](#instalação-em-três-passos) · [Configuração](#configuração) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -145,7 +147,6 @@ node samples/quickstart/run.mjs --check
 ![Saída real do quickstart do dsh-pim-lint](docs/assets/dsh-pim-lint-demo.gif)
 
 *A versão animada da mesma execução.*
-
 
 Aceitação com fixture público/sintético: rode de novo `node scripts/acceptance.mjs`; o detalhe é escrito em `ACCEPTANCE.csv` (citado na íntegra):
 
@@ -300,7 +301,7 @@ node scripts/acceptance.mjs                                 # repetir a aceitaç
 node samples/quickstart/run.mjs --check                     # amostra contra o arquivo dourado; deve imprimir quickstart ok
 ```
 
-Versão atual `0.2.0` (coincide com o `package.json`). Testes: `node --test test/*.test.mjs` verde com 11 casos em 5 arquivos (`pim.test.mjs` 5, `sscc.test.mjs` 3, `plugin-smoke.test.mjs` 1, `quickstart.test.mjs` 1, `tool-name-wire.test.mjs` 1; o `pnpm test` já inclui o build). Estrutura: o código TypeScript está em `src/` (`src/core/pim.ts` tem a análise de CSV e as checagens GTIN e SSCC; `src/plugin/` é a face host e o registro de ferramentas), a saída de compilação em `lib/` (no gitignore; só o pacote npm a leva), a amostra sintética em `samples/quickstart/`, os registros de aceitação em `evidence/` e as imagens em `docs/assets/`. O hero e o diagrama de estrutura são gerados por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow gera os heroes de 1440×576 zh/en em claro/escuro; um SVG escrito à mão gera o diagrama de estrutura de 1100×660; compartilhado pelos cinco idiomas) e pode ser repetido com `python scripts/gen-readme-assets.py`.
+Versão atual `0.2.1` (coincide com o `package.json`). Testes: `node --test test/*.test.mjs` verde com 11 casos em 5 arquivos (`pim.test.mjs` 5, `sscc.test.mjs` 3, `plugin-smoke.test.mjs` 1, `quickstart.test.mjs` 1, `tool-name-wire.test.mjs` 1; o `pnpm test` já inclui o build). Estrutura: o código TypeScript está em `src/` (`src/core/pim.ts` tem a análise de CSV e as checagens GTIN e SSCC; `src/plugin/` é a face host e o registro de ferramentas), a saída de compilação em `lib/` (no gitignore; só o pacote npm a leva), a amostra sintética em `samples/quickstart/`, os registros de aceitação em `evidence/` e as imagens em `docs/assets/`. O hero e o diagrama de estrutura são gerados por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Pillow gera os heroes de 1440×576 zh/en em claro/escuro; um SVG escrito à mão gera o diagrama de estrutura de 1100×660; compartilhado pelos cinco idiomas) e pode ser repetido com `python scripts/gen-readme-assets.py`.
 
 Tópicos: `deepseek-harness`, `dsh`, `dsh-plugin`, `pim`, `gtin`, `perrylink`, `catalog`, `lint`
 
