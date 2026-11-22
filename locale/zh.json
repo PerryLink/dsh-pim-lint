@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "PIM 目录 lint",
+    "description": "面向 DeepSeek Harness 的纯本地 PIM 目录 lint：读 UTF-8 CSV，按 GS1 规则校条码，把每条问题写成「SKU / 字段 / 错误码」；不联网、不调用模型、不改原文件。"
+  }
+}

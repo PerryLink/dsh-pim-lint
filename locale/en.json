@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "PIM catalog lint",
+    "description": "Catch duplicate SKUs, broken GTIN check digits, and malformed prices before the catalog goes live."
+  }
+}

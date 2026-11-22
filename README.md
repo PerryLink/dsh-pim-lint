@@ -301,7 +301,7 @@ node scripts/acceptance.mjs                                 # 单独重跑公开
 node samples/quickstart/run.mjs --check                     # 合成样例对照金标，应输出 quickstart ok
 ```
 
-当前版本 `0.2.1`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs` 共 11 个用例、5 个文件全绿（`pim.test.mjs` 5 个、`sscc.test.mjs` 3 个、`plugin-smoke.test.mjs` 1 个、`quickstart.test.mjs` 1 个、`tool-name-wire.test.mjs` 1 个；`pnpm test` 已内置构建）。目录布局：TypeScript 源码在 `src/`（`src/core/pim.ts` 是 CSV 解析、GTIN 与 SSCC 校验；`src/plugin/` 是宿主面与工具注册），构建产物在 `lib/`（gitignore，npm 包内才有），合成样例在 `samples/quickstart/`，验收记录在 `evidence/`，配图在 `docs/assets/`。开头的 hero 与结构图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow 出 1440×576 深浅双语 hero，手写 SVG 出 1100×660 结构图；五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
+当前版本 `0.2.2`（与 `package.json` 一致）。测试：`node --test test/*.test.mjs` 共 11 个用例、5 个文件全绿（`pim.test.mjs` 5 个、`sscc.test.mjs` 3 个、`plugin-smoke.test.mjs` 1 个、`quickstart.test.mjs` 1 个、`tool-name-wire.test.mjs` 1 个；`pnpm test` 已内置构建）。目录布局：TypeScript 源码在 `src/`（`src/core/pim.ts` 是 CSV 解析、GTIN 与 SSCC 校验；`src/plugin/` 是宿主面与工具注册），构建产物在 `lib/`（gitignore，npm 包内才有），合成样例在 `samples/quickstart/`，验收记录在 `evidence/`，配图在 `docs/assets/`。开头的 hero 与结构图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Pillow 出 1440×576 深浅双语 hero，手写 SVG 出 1100×660 结构图；五语共用），可重复执行：`python scripts/gen-readme-assets.py`。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `pim`, `gtin`, `perrylink`, `catalog`, `lint`
 
